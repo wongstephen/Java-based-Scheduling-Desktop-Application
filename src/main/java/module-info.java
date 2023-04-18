@@ -4,5 +4,6 @@ module cms.stephenwongc195 {
             
                             
     opens cms.stephenwongc195 to javafx.fxml;
+    opens cms.stephenwongc195.controller to javafx.fxml;
     exports cms.stephenwongc195;
 }
