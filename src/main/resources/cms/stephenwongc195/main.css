@@ -7,18 +7,18 @@
     -fx-font-weight: bold;
     -fx-font-family: "Arial";
 }
-#login__btn {
+#login__btn, #login__cancelBtn {
     -fx-background-color: #FFFFFF;
     -fx-text-fill: #222222;
     -fx-font-weight: bold;
 }
 
-#login__btn:hover {
+#login__btn:hover, #login__cancelBtn:hover {
     -fx-background-color: #c1e0ff;
     -fx-text-fill: #555555;
 }
 
-#login__btn:pressed {
+#login__btn:pressed, #login__cancelBtn:pressed {
     -fx-background-color: #F2f2f2;
     -fx-text-fill: #555555;
 }

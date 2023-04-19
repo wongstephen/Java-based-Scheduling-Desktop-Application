@@ -19,6 +19,9 @@ public class HomeController implements Initializable {
         }
     }
 
+    /**
+     * Handles French locale
+     */
     public void handleFrLocale() {
         home___title.setText("Système de gestion de la clientèle");
     }

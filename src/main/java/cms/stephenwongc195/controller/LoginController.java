@@ -1,5 +1,6 @@
 package cms.stephenwongc195.controller;
 
+import cms.stephenwongc195.utils.JDBC;
 import cms.stephenwongc195.utils.Navigate;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -26,17 +27,20 @@ public class LoginController implements Initializable {
     public Label login__localeLbl;
     public Label login__usernameLbl;
     public Label login__passwordLbl;
+    public Button login__cancelBtn;
+
     public Button login__btn;
     public String loginTitle = "Login";
     public String usernameLabel = "username";
     public String passwordLabel = "password";
     public String submitLabel = "Submit";
     public String localeLabel = "Locale";
-
+    public String cancelText = "Cancel";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         globalLocale = Locale.getDefault().toString();
+        globalLocale = "fr_FR";
         if (globalLocale.contains("fr")) {
             handleFrLocale();
         }
@@ -44,17 +48,27 @@ public class LoginController implements Initializable {
         login__usernameLbl.setText(usernameLabel);
         login__passwordLbl.setText(passwordLabel);
         login__btn.setText(submitLabel);
+        login__cancelBtn.setText(cancelText);
         login__localeLbl.setText(localeLabel + ": " + Locale.getDefault().getDisplayName());
     }
 
+    /**
+     * Handles French locale
+     */
     private void handleFrLocale() {
         loginTitle = "Connectez-vous";
         usernameLabel = "nom d'utilisateur";
         passwordLabel = "mot de passe";
         submitLabel = "Envoyer";
         localeLabel = "paramètres régionaux";
+        cancelText = "Annuler";
     }
 
+    /**
+     * Writes to login activity to login_activity.txt
+     *
+     * @param text
+     */
     public void writeLog(String text) throws IOException {
         FileWriter fileWriter = new FileWriter("src/main/java/cms/stephenwongc195/login_activity.txt", true);
         fileWriter.write(text + "\n");
@@ -62,6 +76,11 @@ public class LoginController implements Initializable {
 
     }
 
+    /**
+     * Handles login button click
+     *
+     * @param actionEvent
+     */
     public void handleLogin(ActionEvent actionEvent) throws IOException {
         boolean login = false;
 
@@ -69,16 +88,31 @@ public class LoginController implements Initializable {
         if (login__username.getText().equals("test") && login__password.getText().equals("test")) {
             login = true;
         } else {
-            alert("Invalid username or password", "Please enter a valid username and password");
+            if (globalLocale.contains("fr")) {
+                alert("Nom d’utilisateur ou mot de passe non valide", "Veuillez saisir un nom d’utilisateur et un mot de passe valides");
+            } else {
+                alert("Invalid username or password", "Please enter a valid username and password");
+            }
             return;
         }
 
         writeLog((login ? "Successful" : "Unsuccessful") + " login attempt at " + LocalDateTime.now() + " login " + login__username.getText() + " pw " + login__password.getText());
         if (login) {
+            JDBC.openConnection();
+            JDBC.closeConnection();
             Navigate.navigate(actionEvent, "home");
         }
 
 
+    }
+
+    /**
+     * Handles cancel button click
+     *
+     * @param actionEvent
+     */
+    public void handleCancelBtn(ActionEvent actionEvent) {
+        System.exit(0);
     }
 
 

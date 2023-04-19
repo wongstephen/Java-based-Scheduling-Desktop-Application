@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Navigate {
+public abstract class Navigate {
     static Stage stage;
     static Parent scene;
 
