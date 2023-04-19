@@ -25,16 +25,24 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="274.0" style="-fx-background-color: white;">
                      <children>
-                        <TableView layoutY="41.0" prefHeight="409.0" prefWidth="800.0">
+                        <TableView fx:id="appointmentTable" layoutY="41.0" prefHeight="409.0" prefWidth="800.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
+                            <TableColumn fx:id="appointmentIdCol" prefWidth="75.0" text="ID" />
+                            <TableColumn fx:id="appointmentTitleCol" prefWidth="75.0" text="Title" />
+                              <TableColumn fx:id="appointmentDescriptionCol" prefWidth="124.666748046875" text="Description" />
+                              <TableColumn fx:id="appointmentLocationCol" prefWidth="106.6666259765625" text="Location" />
+                              <TableColumn fx:id="appointmentTypeCol" prefWidth="120.00003051757812" text="Type" />
+                              <TableColumn fx:id="appointmentStartCol" prefWidth="72.666748046875" text="Start Date" />
+                              <TableColumn fx:id="appointmentEndCol" prefWidth="142.0" text="End Date" />
+                              <TableColumn fx:id="appointmentCustomerIdCol" text="Customer ID" />
                           </columns>
                         </TableView>
+                        <TextField layoutX="56.0" layoutY="8.0" />
                         <Button layoutX="322.0" layoutY="513.0" mnemonicParsing="false" text="Button" />
                         <Button layoutX="255.0" layoutY="513.0" mnemonicParsing="false" text="Button" />
                         <Button layoutX="193.0" layoutY="513.0" mnemonicParsing="false" text="Button" />
                         <Button layoutX="131.0" layoutY="513.0" mnemonicParsing="false" text="Button" />
+                        <Label layoutX="14.0" layoutY="12.0" text="Search" />
                      </children>
                   </AnchorPane>
             </content>

@@ -18,6 +18,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static cms.stephenwongc195.utils.Alert.alert;
+import static cms.stephenwongc195.utils.DB.getUserId;
 
 public class LoginController implements Initializable {
     public static String globalLocale = "en_US";
@@ -37,6 +38,11 @@ public class LoginController implements Initializable {
     public String submitLabel = "Submit";
     public String localeLabel = "Locale";
     public String cancelText = "Cancel";
+    public String alertFr1 = "Nom d’utilisateur ou mot de passe non valide";
+    public String alertFr2 = "Veuillez saisir un nom d’utilisateur et un mot de passe valides";
+
+    public static String username;
+    public static int userId;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -84,17 +90,18 @@ public class LoginController implements Initializable {
     public void handleLogin(ActionEvent actionEvent) throws IOException, SQLException {
         boolean login = false;
 
-        // DELETE THIS LATER: this is just for testing
+
         if (DB.login(login__username.getText(), login__password.getText())) {
             login = true;
+            username = login__username.getText();
+            DB.getUserId();
         } else {
             login = false;
             if (globalLocale.contains("fr")) {
-                alert("Nom d’utilisateur ou mot de passe non valide", "Veuillez saisir un nom d’utilisateur et un mot de passe valides");
+                alert(alertFr1, alertFr2);
             } else {
                 alert("Invalid username or password", "Please enter a valid username and password");
             }
-            return;
         }
 
         writeLog((login ? "Successful" : "Unsuccessful") + " login attempt at " + LocalDateTime.now() + " login " + login__username.getText() + " pw " + login__password.getText());
