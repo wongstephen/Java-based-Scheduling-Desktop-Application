@@ -1,5 +1,6 @@
 package cms.stephenwongc195.controller;
 
+import cms.stephenwongc195.utils.DbQuery;
 import cms.stephenwongc195.utils.JDBC;
 import cms.stephenwongc195.utils.Navigate;
 import javafx.event.ActionEvent;
@@ -12,11 +13,13 @@ import javafx.scene.layout.AnchorPane;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static cms.stephenwongc195.utils.Alert.alert;
+import static cms.stephenwongc195.utils.DbQuery.login;
 
 public class LoginController implements Initializable {
     public static String globalLocale = "en_US";
@@ -40,7 +43,6 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         globalLocale = Locale.getDefault().toString();
-        globalLocale = "fr_FR";
         if (globalLocale.contains("fr")) {
             handleFrLocale();
         }
@@ -81,11 +83,11 @@ public class LoginController implements Initializable {
      *
      * @param actionEvent
      */
-    public void handleLogin(ActionEvent actionEvent) throws IOException {
+    public void handleLogin(ActionEvent actionEvent) throws IOException, SQLException {
         boolean login = false;
 
         // DELETE THIS LATER: this is just for testing
-        if (login__username.getText().equals("test") && login__password.getText().equals("test")) {
+        if (DbQuery.login(login__username.getText(), login__password.getText())) {
             login = true;
         } else {
             if (globalLocale.contains("fr")) {
@@ -98,8 +100,6 @@ public class LoginController implements Initializable {
 
         writeLog((login ? "Successful" : "Unsuccessful") + " login attempt at " + LocalDateTime.now() + " login " + login__username.getText() + " pw " + login__password.getText());
         if (login) {
-            JDBC.openConnection();
-            JDBC.closeConnection();
             Navigate.navigate(actionEvent, "home");
         }
 
