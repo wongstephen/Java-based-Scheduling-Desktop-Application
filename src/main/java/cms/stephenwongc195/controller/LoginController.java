@@ -1,7 +1,6 @@
 package cms.stephenwongc195.controller;
 
-import cms.stephenwongc195.utils.DbQuery;
-import cms.stephenwongc195.utils.JDBC;
+import cms.stephenwongc195.utils.DB;
 import cms.stephenwongc195.utils.Navigate;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -19,7 +18,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static cms.stephenwongc195.utils.Alert.alert;
-import static cms.stephenwongc195.utils.DbQuery.login;
 
 public class LoginController implements Initializable {
     public static String globalLocale = "en_US";
@@ -87,9 +85,10 @@ public class LoginController implements Initializable {
         boolean login = false;
 
         // DELETE THIS LATER: this is just for testing
-        if (DbQuery.login(login__username.getText(), login__password.getText())) {
+        if (DB.login(login__username.getText(), login__password.getText())) {
             login = true;
         } else {
+            login = false;
             if (globalLocale.contains("fr")) {
                 alert("Nom d’utilisateur ou mot de passe non valide", "Veuillez saisir un nom d’utilisateur et un mot de passe valides");
             } else {
