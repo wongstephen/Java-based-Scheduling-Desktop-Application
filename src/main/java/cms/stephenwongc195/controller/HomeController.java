@@ -20,43 +20,64 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.Set;
+
 
 import static cms.stephenwongc195.controller.LoginController.globalLocale;
-import static cms.stephenwongc195.utils.DB.tableQueryById;
+import static cms.stephenwongc195.utils.DBUtils.tableQuery;
 
 public class HomeController implements Initializable {
-    public Label home___title;
-
-    public TableView appointmentTable;
-    public TableColumn appointmentIdCol;
-    public TableColumn appointmentTitleCol;
-    public TableColumn appointmentDescriptionCol;
-    public TableColumn appointmentLocationCol;
-    public TableColumn appointmentTypeCol;
-    public TableColumn appointmentStartCol;
-    public TableColumn appointmentEndCol;
-    public TableColumn appointmentCustomerIdCol;
-    public TableColumn appointmentContactCol;
-    public TableColumn appointmentUserIdCol;
-    public Label welcomeUserLabel;
+    @FXML
+    private Label home___title;
+    @FXML
+    private TableView appointmentTable;
+    @FXML
+    private TableColumn appointmentIdCol;
+    @FXML
+    private TableColumn appointmentTitleCol;
+    @FXML
+    private TableColumn appointmentDescriptionCol;
+    @FXML
+    private TableColumn appointmentLocationCol;
+    @FXML
+    private TableColumn appointmentTypeCol;
+    @FXML
+    private TableColumn appointmentStartCol;
+    @FXML
+    private TableColumn appointmentEndCol;
+    @FXML
+    private TableColumn appointmentCustomerIdCol;
+    @FXML
+    private TableColumn appointmentContactCol;
+    @FXML
+    private TableColumn appointmentUserIdCol;
+    @FXML
+    private Label welcomeUserLabel;
     ObservableList<Appointment> appointments = FXCollections.observableArrayList();
     ObservableList<Appointment> filteredAppointments = FXCollections.observableArrayList();
 
-    public TableView customerTable;
-    public TableColumn customerIdCol;
-    public TableColumn customerNameCol;
-    public TableColumn customerAddressCol;
-    public TableColumn customerPostalCodeCol;
-    public TableColumn customerPhoneCol;
-    public TableColumn customerDivisionIdCol;
+    @FXML
+    private TableView customerTable;
+    @FXML
+    private TableColumn customerIdCol;
+    @FXML
+    private TableColumn customerNameCol;
+    @FXML
+    private TableColumn customerAddressCol;
+    @FXML
+    private TableColumn customerPostalCodeCol;
+    @FXML
+    private TableColumn customerPhoneCol;
+    @FXML
+    private TableColumn customerDivisionIdCol;
     ObservableList<Customer> customers = FXCollections.observableArrayList();
 
-    public RadioButton apptMonthRadio;
-    public RadioButton apptWeekRadio;
-    public RadioButton apptAllRadio;
+    @FXML
+    private RadioButton apptMonthRadio;
+    @FXML
+    private RadioButton apptWeekRadio;
+    @FXML
+    private RadioButton apptAllRadio;
 
     @FXML
     private Label homeZoneIdLabel;
@@ -73,10 +94,10 @@ public class HomeController implements Initializable {
     /**
      * On load, populates the customer table with all appointments from the DB
      */
-    public void getAppointments() {
+    private void getAppointments() {
         appointments.clear();
         try {
-            ResultSet rs = tableQueryById("appointments");
+            ResultSet rs = tableQuery("appointments");
             while(rs.next()) {
                 Appointment appointment = new Appointment(
                         rs.getInt("Appointment_ID"),
@@ -111,10 +132,10 @@ public class HomeController implements Initializable {
     /**
      * On load, populates the customer table with all customers from the DB
      */
-    public void getCustomers() {
+    private void getCustomers() {
         customers.clear();
         try {
-            ResultSet rs = tableQueryById("customers");
+            ResultSet rs = tableQuery("customers");
             while (rs.next()) {
                 Customer customer = new Customer(
                         rs.getInt("Customer_ID"),
@@ -143,7 +164,8 @@ public class HomeController implements Initializable {
      *
      * @param actionEvent
      */
-    public void handleMonthApptView(ActionEvent actionEvent) {
+    @FXML
+    private void handleMonthApptView(ActionEvent actionEvent) {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();
@@ -162,7 +184,8 @@ public class HomeController implements Initializable {
      *
      * @param actionEvent
      */
-    public void handleWeekApptView(ActionEvent actionEvent) {
+    @FXML
+    private void handleWeekApptView(ActionEvent actionEvent) {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int week = (now.getDayOfYear() / 7) + 1;
@@ -181,21 +204,26 @@ public class HomeController implements Initializable {
      *
      * @param actionEvent
      */
-    public void handleAllApptView(ActionEvent actionEvent) {
+    @FXML
+    private void handleAllApptView(ActionEvent actionEvent) {
         appointmentTable.setItems(appointments);
     }
 
-    public void handleAddCustomerBtn(ActionEvent actionEvent) throws IOException {
-        Navigate.navigate(actionEvent, "addCustomer");
+    @FXML
+    private void handleAddCustomerBtn(ActionEvent actionEvent) throws IOException {
+        Navigate.changeScene(actionEvent, "addCustomer");
     }
 
-    public void handleUpdateCustomerBtn(ActionEvent actionEvent) {
+    @FXML
+    private void handleUpdateCustomerBtn(ActionEvent actionEvent) {
     }
 
-    public void handleDeleteCustomerBtn(ActionEvent actionEvent) {
+    @FXML
+    private void handleDeleteCustomerBtn(ActionEvent actionEvent) {
     }
 
-    public void handleAddAppointmentBtn(ActionEvent actionEvent) throws IOException {
-        Navigate.navigate(actionEvent, "addAppointment");
+    @FXML
+    private void handleAddAppointmentBtn(ActionEvent actionEvent) throws IOException {
+        Navigate.changeScene(actionEvent, "addAppointment");
     }
 }

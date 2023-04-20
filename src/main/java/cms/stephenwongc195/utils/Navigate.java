@@ -3,6 +3,7 @@ package cms.stephenwongc195.utils;
 import cms.stephenwongc195.App;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,14 +11,19 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public abstract class Navigate {
-    static Stage stage;
-    static Parent scene;
-
-    public static void navigate (ActionEvent actionEvent, String location) throws IOException {
-        stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(App.class.getResource("view/" + location + ".fxml"));
+/**
+ * This class is used to change scenes.
+ */
+public class Navigate {
+    public static void changeScene(ActionEvent actionEvent, String location) {
+        Parent scene = null;
+        try {
+            FXMLLoader loader =  new FXMLLoader(App.class.getResource("view/" + location + ".fxml"));
+            scene = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(scene));
-        stage.show();
     }
 }

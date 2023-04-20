@@ -1,13 +1,13 @@
 package cms.stephenwongc195.controller;
 
-import cms.stephenwongc195.utils.DB;
+import cms.stephenwongc195.utils.DBUtils;
 import cms.stephenwongc195.utils.Navigate;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,32 +18,49 @@ import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static cms.stephenwongc195.utils.Alert.alert;
+import static cms.stephenwongc195.utils.AlertUtils.alertError;
 
 
 public class LoginController implements Initializable {
     public static String globalLocale = "en_US";
-    public AnchorPane login__body;
-    public TextField login__username;
-    public TextField login__password;
-    public Label login__title;
-    public Label login__localeLbl;
-    public Label login__usernameLbl;
-    public Label login__passwordLbl;
-    public Button login__cancelBtn;
-
-    public Button login__btn;
-    public String loginTitle = "Login";
-    public String usernameLabel = "username";
-    public String passwordLabel = "password";
-    public String submitLabel = "Submit";
-    public String localeLabel = "Locale";
-    public String cancelText = "Cancel";
-    public String alertFr1 = "Nom d’utilisateur ou mot de passe non valide";
-    public String alertFr2 = "Veuillez saisir un nom d’utilisateur et un mot de passe valides";
-
     public static String username;
     public static int userId;
+
+    @FXML
+    private TextField login__username;
+    @FXML
+    private TextField login__password;
+    @FXML
+    private Label login__title;
+    @FXML
+    private Label login__localeLbl;
+    @FXML
+    private Label login__usernameLbl;
+    @FXML
+    private Label login__passwordLbl;
+    @FXML
+    private Button login__cancelBtn;
+
+    @FXML
+    private Button login__btn;
+    @FXML
+    private String loginTitle = "Login";
+    @FXML
+    private String usernameLabel = "username";
+    @FXML
+    private String passwordLabel = "password";
+    @FXML
+    private String submitLabel = "Submit";
+    @FXML
+    private String localeLabel = "Locale";
+    @FXML
+    private String cancelText = "Cancel";
+    @FXML
+    private String alertFr1 = "Nom d’utilisateur ou mot de passe non valide";
+    @FXML
+    private String alertFr2 = "Veuillez saisir un nom d’utilisateur et un mot de passe valides";
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -74,7 +91,7 @@ public class LoginController implements Initializable {
      *
      * @param text
      */
-    public void writeLog(String text) throws IOException {
+    private void writeLog(String text) throws IOException {
         FileWriter fileWriter = new FileWriter("src/main/java/cms/stephenwongc195/login_activity.txt", true);
         fileWriter.write(text + "\n");
         fileWriter.close();
@@ -85,23 +102,24 @@ public class LoginController implements Initializable {
      *
      * @param actionEvent
      */
-    public void handleLogin(ActionEvent actionEvent) throws IOException, SQLException {
+    @FXML
+    private void handleLogin(ActionEvent actionEvent) throws IOException, SQLException {
         boolean login = false;
-        if (DB.login(login__username.getText(), login__password.getText())) {
+        if (DBUtils.login(login__username.getText(), login__password.getText())) {
             login = true;
             username = login__username.getText();
-            DB.getUserId();
+            DBUtils.getUserId();
         } else {
             login = false;
             if (globalLocale.contains("fr")) {
-                alert(alertFr1, alertFr2);
+                alertError(alertFr1, alertFr2);
             } else {
-                alert("Invalid username or password", "Please enter a valid username and password");
+                alertError("Invalid username or password", "Please enter a valid username and password");
             }
         }
         writeLog((login ? "Successful" : "Unsuccessful") + " login attempt at " + LocalDateTime.now() + " login " + login__username.getText() + " pw " + login__password.getText());
         if (login) {
-            Navigate.navigate(actionEvent, "home");
+            Navigate.changeScene(actionEvent, "home");
         }
     }
 
@@ -110,7 +128,8 @@ public class LoginController implements Initializable {
      *
      * @param actionEvent
      */
-    public void handleCancelBtn(ActionEvent actionEvent) {
+    @FXML
+    private void handleCancelBtn(ActionEvent actionEvent) {
         System.exit(0);
     }
 }

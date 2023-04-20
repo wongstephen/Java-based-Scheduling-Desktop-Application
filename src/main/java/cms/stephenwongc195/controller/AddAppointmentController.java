@@ -20,7 +20,7 @@ public class AddAppointmentController implements Initializable {
     }
 
     public void handleCancelBtn(ActionEvent actionEvent) throws IOException {
-    Navigate.navigate(actionEvent, "home");
+    Navigate.changeScene(actionEvent, "home");
     }
 
 }
