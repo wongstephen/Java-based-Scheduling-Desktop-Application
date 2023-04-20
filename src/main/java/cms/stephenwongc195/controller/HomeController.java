@@ -138,4 +138,14 @@ public class HomeController implements Initializable {
     public void handleAddCustomerBtn(ActionEvent actionEvent) throws IOException {
         Navigate.navigate(actionEvent, "addCustomer");
     }
+
+    public void handleUpdateCustomerBtn(ActionEvent actionEvent) {
+    }
+
+    public void handleDeleteCustomerBtn(ActionEvent actionEvent) {
+    }
+
+    public void handleAddAppointmentBtn(ActionEvent actionEvent) throws IOException {
+        Navigate.navigate(actionEvent, "addAppointment");
+    }
 }

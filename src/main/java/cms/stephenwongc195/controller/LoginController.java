@@ -19,7 +19,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static cms.stephenwongc195.utils.Alert.alert;
-import static cms.stephenwongc195.utils.DB.getUserId;
+
 
 public class LoginController implements Initializable {
     public static String globalLocale = "en_US";
