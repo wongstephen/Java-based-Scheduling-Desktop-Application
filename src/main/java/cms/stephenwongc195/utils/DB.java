@@ -23,20 +23,47 @@ public class DB {
 
     public static void getUserId() throws SQLException {
         JDBC.openConnection();
-        String sql = "select User_ID from users where User_Name = ?";
+        String sql = "select User_ID from users";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, LoginController.username);
-        ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             LoginController.userId = rs.getInt("User_ID");
         }
     }
 
-    public static ResultSet tableQuery(String tableName) throws SQLException {
+    public static ResultSet tableQueryById(String tableName) throws SQLException {
         JDBC.openConnection();
-        String sql = "select * from " + tableName + " where User_ID = ?";
+        String sql = "select * from " + tableName;
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, String.valueOf(LoginController.userId));
+        ResultSet rs = ps.executeQuery();
+        return rs;
+    }
+
+    public static ResultSet divisionQuery() throws SQLException {
+        JDBC.openConnection();
+        String sql = "SELECT * FROM first_level_divisions JOIN countries ON first_level_divisions.country_id = countries.country_id";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            System.out.println(rs.getString("Division"));
+        }
+        return rs;
+    }
+
+    public static ResultSet countryQuery() throws SQLException {
+        JDBC.openConnection();
+        String sql = "SELECT * FROM countries";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        System.out.println("Country Query");
+        return rs;
+    }
+
+    public static ResultSet divisionQuery(String country) throws SQLException {
+        JDBC.openConnection();
+        String sql = "SELECT * FROM first_level_divisions JOIN countries ON first_level_divisions.country_id = countries.country_id where countries.Country = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, country);
         ResultSet rs = ps.executeQuery();
         return rs;
     }

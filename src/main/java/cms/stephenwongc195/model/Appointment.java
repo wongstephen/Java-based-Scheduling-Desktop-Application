@@ -1,6 +1,10 @@
 package cms.stephenwongc195.model;
 
+import java.sql.Timestamp;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 
 public class Appointment {
     private int appointmentId;
@@ -8,13 +12,13 @@ public class Appointment {
     private String appointmentDescription;
     private String appointmentLocation;
     private String appointmentType;
-    private Date appointmentStart;
-    private Date appointmentEnd;
+    private LocalDateTime appointmentStart;
+    private LocalDateTime appointmentEnd;
     private int customerId;
     private int userId;
     private int contactId;
 
-    public Appointment(int appointmentId, String appointmentTitle, String appointmentDescription, String appointmentLocation, String appointmentType, Date appointmentStart, Date appointmentEnd, int customerId, int userId, int contactId) {
+    public Appointment(int appointmentId, String appointmentTitle, String appointmentDescription, String appointmentLocation, String appointmentType, LocalDateTime appointmentStart, LocalDateTime appointmentEnd, int customerId, int userId, int contactId) {
         this.appointmentId = appointmentId;
         this.appointmentTitle = appointmentTitle;
         this.appointmentDescription = appointmentDescription;
@@ -67,19 +71,17 @@ public class Appointment {
         this.appointmentType = appointmentType;
     }
 
-    public Date getAppointmentStart() {
-        return appointmentStart;
-    }
+    public LocalDateTime getAppointmentStart() { return appointmentStart; }
 
-    public void setAppointmentStart(Date appointmentStart) {
+    public void setAppointmentStart (LocalDateTime appointmentStart) {
         this.appointmentStart = appointmentStart;
     }
 
-    public Date getAppointmentEnd() {
+    public LocalDateTime getAppointmentEnd() {
         return appointmentEnd;
     }
 
-    public void setAppointmentEnd(Date appointmentEnd) {
+    public void Timestamp (LocalDateTime appointmentEnd) {
         this.appointmentEnd = appointmentEnd;
     }
 

@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -47,15 +48,15 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         globalLocale = Locale.getDefault().toString();
-        if (globalLocale.contains("fr")) {
-            handleFrLocale();
-        }
+        if (globalLocale.contains("fr")) handleFrLocale();
+
         login__title.setText(loginTitle);
         login__usernameLbl.setText(usernameLabel);
         login__passwordLbl.setText(passwordLabel);
         login__btn.setText(submitLabel);
         login__cancelBtn.setText(cancelText);
-        login__localeLbl.setText(localeLabel + ": " + Locale.getDefault().getDisplayName());
+        login__localeLbl.setText(localeLabel + ": " + ZoneId.systemDefault());
+
     }
 
     /**

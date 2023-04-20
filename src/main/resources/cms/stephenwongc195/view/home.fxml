@@ -9,75 +9,94 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cms.stephenwongc195.controller.HomeController">
-   <children>
-      <Label fx:id="home___title" layoutX="112.0" layoutY="38.0" text="Customer Management System">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <TabPane layoutX="112.0" layoutY="97.0" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Appointments">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="274.0" style="-fx-background-color: white;">
-                     <children>
-                        <TableView fx:id="appointmentTable" layoutY="41.0" prefHeight="409.0" prefWidth="800.0">
-                          <columns>
-                            <TableColumn fx:id="appointmentIdCol" prefWidth="75.0" text="ID" />
-                            <TableColumn fx:id="appointmentTitleCol" prefWidth="75.0" text="Title" />
-                              <TableColumn fx:id="appointmentDescriptionCol" prefWidth="124.666748046875" text="Description" />
-                              <TableColumn fx:id="appointmentLocationCol" prefWidth="106.6666259765625" text="Location" />
-                              <TableColumn fx:id="appointmentTypeCol" prefWidth="120.00003051757812" text="Type" />
-                              <TableColumn fx:id="appointmentStartCol" prefWidth="72.666748046875" text="Start Date" />
-                              <TableColumn fx:id="appointmentEndCol" prefWidth="142.0" text="End Date" />
-                              <TableColumn fx:id="appointmentCustomerIdCol" text="Customer ID" />
-                          </columns>
-                        </TableView>
-                        <TextField layoutX="56.0" layoutY="8.0" />
-                        <Button layoutX="322.0" layoutY="513.0" mnemonicParsing="false" text="Button" />
-                        <Button layoutX="255.0" layoutY="513.0" mnemonicParsing="false" text="Button" />
-                        <Button layoutX="193.0" layoutY="513.0" mnemonicParsing="false" text="Button" />
-                        <Button layoutX="131.0" layoutY="513.0" mnemonicParsing="false" text="Button" />
-                        <Label layoutX="14.0" layoutY="12.0" text="Search" />
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Customers">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
-                     <children>
-                        <TableView layoutY="112.0" prefHeight="338.0" prefWidth="800.0">
-                           <columns>
-                              <TableColumn prefWidth="75.0" text="C1" />
-                              <TableColumn prefWidth="75.0" text="C2" />
-                           </columns>
-                        </TableView>
-                        <Label layoutX="14.0" layoutY="508.0" text="Customers">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Button layoutX="14.0" layoutY="508.0" mnemonicParsing="false" text="Button" />
-                        <Button layoutX="14.0" layoutY="508.0" mnemonicParsing="false" text="Button" />
-                        <TextField layoutX="14.0" layoutY="508.0" />
-                        <RadioButton layoutX="14.0" layoutY="508.0" mnemonicParsing="false" text="RadioButton" />
-                        <RadioButton layoutX="14.0" layoutY="508.0" mnemonicParsing="false" text="RadioButton" />
-                        <RadioButton layoutX="14.0" layoutY="508.0" mnemonicParsing="false" text="RadioButton" />
-                        <RadioButton layoutX="14.0" layoutY="508.0" mnemonicParsing="false" text="RadioButton" />
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
-      <Button layoutX="808.0" layoutY="61.0" mnemonicParsing="false" text="Generate Report" />
-   </children>
-   <stylesheets>
-      <URL value="@../main.css" />
-   </stylesheets>
+    <children>
+        <Label fx:id="home___title" layoutX="112.0" layoutY="38.0" text="Customer Management System">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+        <TabPane layoutX="112.0" layoutY="97.0" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Appointments">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="274.0" style="-fx-background-color: white;">
+                            <children>
+                                <TableView fx:id="appointmentTable" layoutY="41.0" prefHeight="409.0" prefWidth="800.0">
+                                    <columns>
+                                        <TableColumn fx:id="appointmentIdCol" prefWidth="50.00000762939453" text="Appointment_ID" />
+                                        <TableColumn fx:id="appointmentTitleCol" prefWidth="100.66664123535156" text="Title" />
+                                        <TableColumn fx:id="appointmentDescriptionCol" prefWidth="124.666748046875" text="Description" />
+                                        <TableColumn fx:id="appointmentLocationCol" prefWidth="61.99993896484375" text="Location" />
+                                        <TableColumn fx:id="appointmentContactCol" prefWidth="62.0" text="Contact" />
+                                        <TableColumn fx:id="appointmentTypeCol" prefWidth="73.99993896484375" text="Type" />
+                                        <TableColumn fx:id="appointmentStartCol" prefWidth="98.6666259765625" text="Start Date and Time" />
+                                        <TableColumn fx:id="appointmentEndCol" prefWidth="80.6666259765625" text="End Date and Time" />
+                                        <TableColumn fx:id="appointmentCustomerIdCol" prefWidth="77.3333740234375" text="Customer_ID" />
+                                        <TableColumn fx:id="appointmentUserIdCol" prefWidth="67.33331298828125" text="User_ID" />
+                                    </columns>
+                                </TableView>
+                                <HBox layoutX="14.0" layoutY="9.0" prefHeight="23.0" prefWidth="267.0" spacing="10.0">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="48.0" text="view by">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <RadioButton fx:id="apptMonthRadio" mnemonicParsing="false" onAction="#handleMonthApptView" text="month">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="apptGroup" />
+                                 </toggleGroup></RadioButton>
+                                        <RadioButton fx:id="apptWeekRadio" mnemonicParsing="false" onAction="#handleWeekApptView" prefHeight="17.0" prefWidth="55.0" text="week" toggleGroup="$apptGroup" />
+                                        <RadioButton fx:id="apptAllRadio" mnemonicParsing="false" onAction="#handleAllApptView" prefHeight="17.0" prefWidth="49.0" selected="true" text="all" toggleGroup="$apptGroup" />
+                                    </children>
+                                </HBox>
+                                <TextField layoutX="636.0" layoutY="8.0" />
+                                <Button layoutX="322.0" layoutY="513.0" mnemonicParsing="false" text="Button" />
+                                <Button layoutX="255.0" layoutY="513.0" mnemonicParsing="false" text="Button" />
+                                <Button layoutX="193.0" layoutY="513.0" mnemonicParsing="false" text="Button" />
+                                <Button layoutX="131.0" layoutY="513.0" mnemonicParsing="false" text="Button" />
+                                <Label layoutX="594.0" layoutY="12.0" text="Search" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Customers">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
+                            <children>
+                                <TableView fx:id="customerTable" layoutY="51.0" prefHeight="338.0" prefWidth="800.0" style="-fx-background-color: white;">
+                                    <columns>
+                                        <TableColumn fx:id="customerIdCol" prefWidth="75.0" text="Customer ID" />
+                                        <TableColumn fx:id="customerNameCol" prefWidth="75.0" text="Name" />
+                                        <TableColumn fx:id="customerAddressCol" prefWidth="75.0" text="Address" />
+                                        <TableColumn fx:id="customerPostalCodeCol" prefWidth="75.0" text="Postal Code" />
+                                        <TableColumn fx:id="customerPhoneCol" prefWidth="75.0" text="Phone" />
+                                        <TableColumn fx:id="customerDivisionIdCol" prefWidth="75.0" text="Division ID" />
+                                    </columns>
+                                </TableView>
+                                <Label layoutX="14.0" layoutY="508.0" text="Customers">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Button layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleAddCustomerBtn" prefHeight="33.0" prefWidth="117.0" style="-fx-background-color: #008fd5; -fx-text-fill: white; -fx-font-weight: bold;" text="Add Customer" textFill="WHITE" />
+                                <Button layoutX="14.0" layoutY="508.0" mnemonicParsing="false" text="Button" />
+                                <TextField layoutX="325.0" layoutY="508.0" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+        <Button layoutX="808.0" layoutY="61.0" mnemonicParsing="false" text="Generate Report" />
+    </children>
+    <stylesheets>
+        <URL value="@../main.css" />
+    </stylesheets>
 </AnchorPane>
