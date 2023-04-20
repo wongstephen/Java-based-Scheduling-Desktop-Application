@@ -42,10 +42,11 @@ public class AddCustomerController implements Initializable {
         try {
             ResultSet rs = DB.countryQuery();
             while (rs.next()) {
-                countrySet.add(rs.getString("Country"));
+
+                countryList.add(new Country(rs.getInt("Country_ID"), rs.getString("Country")));
             }
-            countrySet.forEach((country)->{
-                countryCombo.getItems().add(country);
+            countryList.forEach((country)->{
+                countryCombo.getItems().add(country.getCountryName());
             });
         } catch (SQLException e) {
             throw new RuntimeException(e);

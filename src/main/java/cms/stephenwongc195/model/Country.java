@@ -1,6 +1,6 @@
 package cms.stephenwongc195.model;
 
-public abstract class Country {
+public class Country {
     private int countryId;
     private String countryName;
 

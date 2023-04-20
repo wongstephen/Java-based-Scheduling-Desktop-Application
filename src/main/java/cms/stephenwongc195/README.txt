@@ -17,3 +17,6 @@
     Connector/J 8.0.33
 
     MySql Login: sqlUser Password: Passw0rd!
+
+      My SQL server time should be in UTC:
+        SET GLOBAL time_zone = '+0:00';

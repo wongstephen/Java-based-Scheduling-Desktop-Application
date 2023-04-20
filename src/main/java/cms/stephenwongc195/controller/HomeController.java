@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -37,7 +39,9 @@ public class HomeController implements Initializable {
     public TableColumn appointmentCustomerIdCol;
     public TableColumn appointmentContactCol;
     public TableColumn appointmentUserIdCol;
+    public Label welcomeUserLabel;
     ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+    ObservableList<Appointment> filteredAppointments = FXCollections.observableArrayList();
 
     public TableView customerTable;
     public TableColumn customerIdCol;
@@ -58,6 +62,7 @@ public class HomeController implements Initializable {
         if (globalLocale.contains("fr")) home___title.setText("Système de gestion de la clientèle"); // French Locale
         getAppointments();
         getCustomers();
+        welcomeUserLabel.setText("Welcome, " + LoginController.username);
         System.out.println("Username: " + LoginController.username);
         System.out.println("User ID: " + LoginController.userId);
     }
@@ -88,8 +93,8 @@ public class HomeController implements Initializable {
             appointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
             appointmentContactCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
             appointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
-            appointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("appointmentStart"));
-            appointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("appointmentEnd"));
+            appointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("appointmentStartFormatted"));
+            appointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("appointmentEndFormatted"));
             appointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
             appointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
         } catch (SQLException e) {
@@ -126,9 +131,31 @@ public class HomeController implements Initializable {
 
     // Appointment View Radio Buttons
     public void handleMonthApptView(ActionEvent actionEvent) {
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        int month = now.getMonthValue();
+        filteredAppointments.clear();
+        appointments.forEach(appointment -> {
+            if (appointment.getAppointmentStart().getMonthValue() == month && appointment.getAppointmentStart().getYear() == year) {
+                filteredAppointments.add(appointment);
+                System.out.println("Appointment added to filtered list");
+            }
+        });
+        appointmentTable.setItems(filteredAppointments);
     }
 
     public void handleWeekApptView(ActionEvent actionEvent) {
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        int week = (now.getDayOfYear() / 7) + 1;
+        System.out.println("Week: " + week);
+        filteredAppointments.clear();
+        appointments.forEach(appointment -> {
+            if (appointment.getAppointmentStart().getDayOfYear() / 7 + 1 == week && appointment.getAppointmentStart().getYear() == year) {
+                filteredAppointments.add(appointment);
+            }
+        });
+        appointmentTable.setItems(filteredAppointments);
     }
 
     public void handleAllApptView(ActionEvent actionEvent) {

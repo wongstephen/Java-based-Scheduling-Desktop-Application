@@ -73,12 +73,24 @@ public class Appointment {
 
     public LocalDateTime getAppointmentStart() { return appointmentStart; }
 
+    public String getAppointmentStartFormatted() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedDateTime = appointmentStart.format(formatter);
+        return formattedDateTime;
+    }
+
     public void setAppointmentStart (LocalDateTime appointmentStart) {
         this.appointmentStart = appointmentStart;
     }
 
     public LocalDateTime getAppointmentEnd() {
         return appointmentEnd;
+    }
+
+    public String getAppointmentEndFormatted() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedDateTime = appointmentEnd.format(formatter);
+        return formattedDateTime;
     }
 
     public void Timestamp (LocalDateTime appointmentEnd) {
