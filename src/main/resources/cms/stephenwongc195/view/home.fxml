@@ -16,29 +16,29 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cms.stephenwongc195.controller.HomeController">
     <children>
-        <Label fx:id="home___title" layoutX="112.0" layoutY="38.0" text="Customer Management System">
+        <Label fx:id="home___title" layoutX="12.0" layoutY="11.0" text="Customer Management System">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
         </Label>
-        <TabPane layoutX="112.0" layoutY="97.0" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane layoutX="12.0" layoutY="107.0" prefHeight="600.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="Appointments">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="274.0" style="-fx-background-color: white;">
                             <children>
-                                <TableView fx:id="appointmentTable" layoutY="41.0" prefHeight="409.0" prefWidth="800.0">
+                                <TableView fx:id="appointmentTable" layoutY="41.0" prefHeight="469.0" prefWidth="1000.0">
                                     <columns>
-                                        <TableColumn fx:id="appointmentIdCol" prefWidth="50.00000762939453" text="Appointment_ID" />
-                                        <TableColumn fx:id="appointmentTitleCol" prefWidth="100.66664123535156" text="Title" />
+                                        <TableColumn fx:id="appointmentIdCol" maxWidth="1000.0" prefWidth="36.666687965393066" text="ID" />
+                                        <TableColumn fx:id="appointmentTitleCol" prefWidth="84.66666030883789" text="Title" />
                                         <TableColumn fx:id="appointmentDescriptionCol" prefWidth="124.666748046875" text="Description" />
                                         <TableColumn fx:id="appointmentLocationCol" prefWidth="61.99993896484375" text="Location" />
-                                        <TableColumn fx:id="appointmentContactCol" prefWidth="62.0" text="Contact" />
+                                        <TableColumn fx:id="appointmentContactCol" maxWidth="2000.0" prefWidth="62.0" text="Contact" />
                                         <TableColumn fx:id="appointmentTypeCol" prefWidth="73.99993896484375" text="Type" />
                                         <TableColumn fx:id="appointmentStartCol" prefWidth="98.6666259765625" text="Start Date and Time" />
-                                        <TableColumn fx:id="appointmentEndCol" prefWidth="80.6666259765625" text="End Date and Time" />
-                                        <TableColumn fx:id="appointmentCustomerIdCol" prefWidth="77.3333740234375" text="Customer_ID" />
-                                        <TableColumn fx:id="appointmentUserIdCol" prefWidth="56.0" text="User_ID" />
+                                        <TableColumn fx:id="appointmentEndCol" prefWidth="192.666748046875" text="End Date and Time" />
+                                        <TableColumn fx:id="appointmentCustomerIdCol" maxWidth="2000.0" prefWidth="22.6666259765625" text="Customer_ID" />
+                                        <TableColumn fx:id="appointmentUserIdCol" maxWidth="2000.0" prefWidth="56.0" text="User_ID" />
                                     </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -61,7 +61,7 @@
                                 </HBox>
                                 <TextField layoutX="636.0" layoutY="8.0" />
                                 <Label layoutX="594.0" layoutY="12.0" text="Search" />
-                        <HBox layoutX="177.0" layoutY="465.0" spacing="5.0">
+                        <HBox layoutX="277.0" layoutY="523.0" spacing="5.0">
                            <children>
                               <Button mnemonicParsing="false" onAction="#handleAddAppointmentBtn" prefHeight="33.0" prefWidth="145.0" style="-fx-background-color: #008fd5; -fx-text-fill: white; -fx-font-weight: bold;" text="Add Appointment" textFill="WHITE" />
                               <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" style="-fx-background-color: #008fd5; -fx-text-fill: white; -fx-font-weight: bold;" text="Update Appointment" textFill="WHITE" />
@@ -76,10 +76,10 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                             <children>
-                                <TableView fx:id="customerTable" fixedCellSize="0.0" prefHeight="443.0" prefWidth="800.0" style="-fx-background-color: white;">
+                                <TableView fx:id="customerTable" prefHeight="509.0" prefWidth="1000.0" style="-fx-background-color: white;">
                                     <columns>
-                                        <TableColumn fx:id="customerIdCol" prefWidth="75.0" text="Customer ID" />
-                                        <TableColumn fx:id="customerNameCol" prefWidth="75.0" text="Name" />
+                                        <TableColumn fx:id="customerIdCol" maxWidth="1000.0" prefWidth="1500.0" text="ID" />
+                                        <TableColumn fx:id="customerNameCol" prefWidth="221.99996185302734" text="Name" />
                                         <TableColumn fx:id="customerAddressCol" prefWidth="75.0" text="Address" />
                                         <TableColumn fx:id="customerPostalCodeCol" prefWidth="75.0" text="Postal Code" />
                                         <TableColumn fx:id="customerPhoneCol" prefWidth="75.0" text="Phone" />
@@ -89,7 +89,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                                 </TableView>
-                        <HBox layoutX="219.0" layoutY="459.0" spacing="5.0">
+                        <HBox layoutX="319.0" layoutY="523.0" spacing="5.0">
                            <children>
                                       <Button mnemonicParsing="false" onAction="#handleAddCustomerBtn" prefHeight="33.0" prefWidth="117.0" style="-fx-background-color: #008fd5; -fx-text-fill: white; -fx-font-weight: bold;" text="Add Customer" textFill="WHITE" />
                               <Button mnemonicParsing="false" onAction="#handleUpdateCustomerBtn" prefHeight="33.0" prefWidth="117.0" style="-fx-background-color: #008fd5; -fx-text-fill: white; -fx-font-weight: bold;" text="Update Customer" textFill="WHITE" />
@@ -102,8 +102,9 @@
                 </Tab>
             </tabs>
         </TabPane>
-      <Button layoutX="794.0" layoutY="50.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="117.0" style="-fx-background-color: white; -fx-text-fill: #008fd5; -fx-font-weight: bold;" text="Generate Report" textFill="WHITE" />
-      <Label fx:id="welcomeUserLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="801.0" layoutY="14.0" prefHeight="17.0" prefWidth="209.0" style="-fx-alignment: right; -fx-text-alignment: right;" textAlignment="RIGHT" textFill="WHITE" />
+      <Button layoutX="894.0" layoutY="14.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="117.0" style="-fx-background-color: white; -fx-text-fill: #008fd5; -fx-font-weight: bold;" text="Generate Report" textFill="WHITE" />
+      <Label fx:id="welcomeUserLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="801.0" layoutY="14.0" prefHeight="17.0" prefWidth="209.0" style="-fx-text-alignment: right;" textAlignment="RIGHT" textFill="WHITE" />
+      <Label fx:id="homeZoneIdLabel" layoutX="420.0" layoutY="722.0" prefHeight="17.0" prefWidth="184.0" style="-fx-text-alignment: center; -fx-text-fill: white;" text="Label" />
     </children>
     <stylesheets>
         <URL value="@../main.css" />

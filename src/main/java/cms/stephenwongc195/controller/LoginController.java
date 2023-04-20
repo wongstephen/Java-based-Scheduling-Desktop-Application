@@ -49,14 +49,12 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         globalLocale = Locale.getDefault().toString();
         if (globalLocale.contains("fr")) handleFrLocale();
-
         login__title.setText(loginTitle);
         login__usernameLbl.setText(usernameLabel);
         login__passwordLbl.setText(passwordLabel);
         login__btn.setText(submitLabel);
         login__cancelBtn.setText(cancelText);
         login__localeLbl.setText(localeLabel + ": " + ZoneId.systemDefault());
-
     }
 
     /**
@@ -80,7 +78,6 @@ public class LoginController implements Initializable {
         FileWriter fileWriter = new FileWriter("src/main/java/cms/stephenwongc195/login_activity.txt", true);
         fileWriter.write(text + "\n");
         fileWriter.close();
-
     }
 
     /**
@@ -90,8 +87,6 @@ public class LoginController implements Initializable {
      */
     public void handleLogin(ActionEvent actionEvent) throws IOException, SQLException {
         boolean login = false;
-
-
         if (DB.login(login__username.getText(), login__password.getText())) {
             login = true;
             username = login__username.getText();
@@ -104,13 +99,10 @@ public class LoginController implements Initializable {
                 alert("Invalid username or password", "Please enter a valid username and password");
             }
         }
-
         writeLog((login ? "Successful" : "Unsuccessful") + " login attempt at " + LocalDateTime.now() + " login " + login__username.getText() + " pw " + login__password.getText());
         if (login) {
             Navigate.navigate(actionEvent, "home");
         }
-
-
     }
 
     /**
@@ -121,11 +113,4 @@ public class LoginController implements Initializable {
     public void handleCancelBtn(ActionEvent actionEvent) {
         System.exit(0);
     }
-
-
-    // appends to login_activity.txt tracking log-in attempts, dates, and time stamps and whether each attempt was successful
-    // if successful, user is directed to the main screen
-    // if unsuccessful, display error message
-    // displays login in english or french based on computer language. Updates all text, tabels, buttons, and erros
-    // translate error messages to french
 }

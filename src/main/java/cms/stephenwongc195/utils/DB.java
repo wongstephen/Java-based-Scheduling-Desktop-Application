@@ -41,12 +41,10 @@ public class DB {
 
     public static ResultSet divisionQuery() throws SQLException {
         JDBC.openConnection();
-        String sql = "SELECT * FROM first_level_divisions JOIN countries ON first_level_divisions.country_id = countries.country_id";
+        String sql = "SELECT * FROM first_level_divisions";
+//        String sql = "SELECT * FROM first_level_divisions JOIN countries ON first_level_divisions.country_id = countries.country_id";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            System.out.println(rs.getString("Division"));
-        }
         return rs;
     }
 
@@ -59,12 +57,5 @@ public class DB {
         return rs;
     }
 
-    public static ResultSet divisionQuery(String country) throws SQLException {
-        JDBC.openConnection();
-        String sql = "SELECT * FROM first_level_divisions JOIN countries ON first_level_divisions.country_id = countries.country_id where countries.Country = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, country);
-        ResultSet rs = ps.executeQuery();
-        return rs;
-    }
+
 }

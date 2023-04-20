@@ -6,6 +6,7 @@ import cms.stephenwongc195.utils.Navigate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -18,6 +19,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -56,17 +58,21 @@ public class HomeController implements Initializable {
     public RadioButton apptWeekRadio;
     public RadioButton apptAllRadio;
 
+    @FXML
+    private Label homeZoneIdLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (globalLocale.contains("fr")) home___title.setText("Système de gestion de la clientèle"); // French Locale
-        getAppointments();
-        getCustomers();
-        welcomeUserLabel.setText("Welcome, " + LoginController.username);
-        System.out.println("Username: " + LoginController.username);
-        System.out.println("User ID: " + LoginController.userId);
+        if (globalLocale.contains("fr")) home___title.setText("Système de gestion de la clientèle"); // French Locale custom title
+        getAppointments(); // Get appointments from DB and populates appointments table
+        getCustomers(); // Get customers from DB and populates customers table
+        welcomeUserLabel.setText("Welcome, " + LoginController.username); // Welcome username on home screen
+        homeZoneIdLabel.setText(ZonedDateTime.now().getZone().toString()); // Set Zone ID label
     }
 
+    /**
+     * On load, populates the customer table with all appointments from the DB
+     */
     public void getAppointments() {
         appointments.clear();
         try {
@@ -102,6 +108,9 @@ public class HomeController implements Initializable {
         }
     }
 
+    /**
+     * On load, populates the customer table with all customers from the DB
+     */
     public void getCustomers() {
         customers.clear();
         try {
@@ -129,7 +138,11 @@ public class HomeController implements Initializable {
         }
     }
 
-    // Appointment View Radio Buttons
+    /**
+     * Handles the appointment month radio button click event and updates the customer table
+     *
+     * @param actionEvent
+     */
     public void handleMonthApptView(ActionEvent actionEvent) {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
@@ -144,6 +157,11 @@ public class HomeController implements Initializable {
         appointmentTable.setItems(filteredAppointments);
     }
 
+    /**
+     * Handles the appointment week radio button click event and updates the customer table
+     *
+     * @param actionEvent
+     */
     public void handleWeekApptView(ActionEvent actionEvent) {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
@@ -158,6 +176,11 @@ public class HomeController implements Initializable {
         appointmentTable.setItems(filteredAppointments);
     }
 
+    /**
+     * Handles the appointment all radio button click event and updates the customer table
+     *
+     * @param actionEvent
+     */
     public void handleAllApptView(ActionEvent actionEvent) {
         appointmentTable.setItems(appointments);
     }

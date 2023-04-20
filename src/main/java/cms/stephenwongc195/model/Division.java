@@ -1,13 +1,14 @@
 package cms.stephenwongc195.model;
 
-public class Divisions extends Country {
+public class Division{
     private int divisionId;
+    private int countryId;
     private String divisionName;
 
-    public Divisions(int countryId, String countryName, int divisionId, String divisionName) {
-        super(countryId, countryName);
+    public Division(int divisionId, String divisionName, int countryId) {
         this.divisionId = divisionId;
         this.divisionName = divisionName;
+        this.countryId = countryId;
     }
 
     public int getDivisionId() {
@@ -24,6 +25,19 @@ public class Divisions extends Country {
 
     public void setDivisionName(String divisionName) {
         this.divisionName = divisionName;
+    }
+
+    public int getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(int countryId) {
+        this.countryId = countryId;
+    }
+
+    @Override
+    public String toString(){
+        return divisionName + " [" + divisionId + "]";
     }
 }
 

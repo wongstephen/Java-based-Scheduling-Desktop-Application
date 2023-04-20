@@ -74,9 +74,8 @@ public class Appointment {
     public LocalDateTime getAppointmentStart() { return appointmentStart; }
 
     public String getAppointmentStartFormatted() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        String formattedDateTime = appointmentStart.format(formatter);
-        return formattedDateTime;
+        ZonedDateTime zdt = appointmentStart.atZone(ZoneId.systemDefault());
+        return zdt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm zzz"));
     }
 
     public void setAppointmentStart (LocalDateTime appointmentStart) {
@@ -88,9 +87,9 @@ public class Appointment {
     }
 
     public String getAppointmentEndFormatted() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        String formattedDateTime = appointmentEnd.format(formatter);
-        return formattedDateTime;
+        ZonedDateTime zdt = appointmentEnd.atZone(ZoneId.systemDefault());
+//        System.out.println(zdt.withZoneSameInstant(ZoneId.of("UTC")));
+        return zdt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm zzz"));
     }
 
     public void Timestamp (LocalDateTime appointmentEnd) {
