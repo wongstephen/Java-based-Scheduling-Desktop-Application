@@ -3,16 +3,14 @@ package cms.stephenwongc195.controller;
 import cms.stephenwongc195.model.Appointment;
 import cms.stephenwongc195.model.Customer;
 import cms.stephenwongc195.utils.AlertUtils;
+import cms.stephenwongc195.dao.Query;
 import cms.stephenwongc195.utils.Navigate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
@@ -20,12 +18,17 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
 import static cms.stephenwongc195.controller.LoginController.globalLocale;
-import static cms.stephenwongc195.utils.DBUtils.tableQuery;
+import static cms.stephenwongc195.dao.AppointmentDao.getAllAppointments;
+import static cms.stephenwongc195.dao.CustomerDao.getAllCustomers;
+import static cms.stephenwongc195.dao.CustomerDao.updateAllCustomers;
+import static cms.stephenwongc195.dao.Query.tableQuery;
 
 public class HomeController implements Initializable {
     @FXML
@@ -54,7 +57,7 @@ public class HomeController implements Initializable {
     private TableColumn appointmentUserIdCol;
     @FXML
     private Label welcomeUserLabel;
-    ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+//    ObservableList<Appointment> appointments = FXCollections.observableArrayList();
     ObservableList<Appointment> filteredAppointments = FXCollections.observableArrayList();
 
     @FXML
@@ -86,8 +89,8 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (globalLocale.contains("fr")) home___title.setText("Système de gestion de la clientèle"); // French Locale custom title
-        getAppointments(); // Get appointments from DB and populates appointments table
-        getCustomers(); // Get customers from DB and populates customers table
+        setAppointmentTable(); // Get appointments from DB and populates appointments table
+        setCustomerTable(); // Get customers from DB and populates customers table
         welcomeUserLabel.setText("Welcome, " + LoginController.username); // Welcome username on home screen
         homeZoneIdLabel.setText(ZonedDateTime.now().getZone().toString()); // Set Zone ID label
     }
@@ -95,69 +98,32 @@ public class HomeController implements Initializable {
     /**
      * On load, populates the customer table with all appointments from the DB
      */
-    private void getAppointments() {
-        appointments.clear();
-        try {
-            ResultSet rs = tableQuery("appointments");
-            while(rs.next()) {
-                Appointment appointment = new Appointment(
-                        rs.getInt("Appointment_ID"),
-                        rs.getString("Title"),
-                        rs.getString("Description"),
-                        rs.getString("Location"),
-                        rs.getString("Type"),
-                        rs.getTimestamp("Start").toLocalDateTime(),
-                        rs.getTimestamp("End").toLocalDateTime(),
-                        rs.getInt("Customer_Id"),
-                        rs.getInt("User_Id"),
-                        rs.getInt("Contact_Id")
-                );
-                appointments.add(appointment);
-            }
-            appointmentTable.setItems(appointments);
-            appointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-            appointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
-            appointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
-            appointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
-            appointmentContactCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-            appointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
-            appointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("appointmentStartFormatted"));
-            appointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("appointmentEndFormatted"));
-            appointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-            appointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    private void setAppointmentTable() {
+        appointmentTable.setItems(getAllAppointments());
+        appointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        appointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
+        appointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
+        appointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
+        appointmentContactCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        appointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
+        appointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("appointmentStartFormatted"));
+        appointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("appointmentEndFormatted"));
+        appointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        appointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
     }
 
     /**
      * On load, populates the customer table with all customers from the DB
      */
-    private void getCustomers() {
-        customers.clear();
-        try {
-            ResultSet rs = tableQuery("customers");
-            while (rs.next()) {
-                Customer customer = new Customer(
-                        rs.getInt("Customer_ID"),
-                        rs.getString("Customer_Name"),
-                        rs.getString("Address"),
-                        rs.getString("Postal_Code"),
-                        rs.getString("Phone"),
-                        rs.getInt("Division_ID")
-                );
-                customers.add(customer);
-            }
-            customerTable.setItems(customers);
+    private void setCustomerTable() {
+            updateAllCustomers(); // Update all customers
+            customerTable.setItems(getAllCustomers());
             customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
             customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
             customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
             customerPostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
             customerPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
             customerDivisionIdCol.setCellValueFactory(new PropertyValueFactory<>("customerDivisionId"));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     /**
@@ -171,7 +137,7 @@ public class HomeController implements Initializable {
         int year = now.getYear();
         int month = now.getMonthValue();
         filteredAppointments.clear();
-        appointments.forEach(appointment -> {
+        getAllAppointments().forEach(appointment -> {
             if (appointment.getAppointmentStart().getMonthValue() == month && appointment.getAppointmentStart().getYear() == year) {
                 filteredAppointments.add(appointment);
                 System.out.println("Appointment added to filtered list");
@@ -189,14 +155,10 @@ public class HomeController implements Initializable {
     private void handleWeekApptView(ActionEvent actionEvent) {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
-        int week = (now.getDayOfYear() / 7 + 1) ;
-
-        System.out.println("Week: " + week);
+        int currentWeek = (int) Math.ceil(now.getDayOfYear() / 7) + 1;
         filteredAppointments.clear();
-        appointments.forEach(appointment -> {
-            System.out.println("appointment date of year " + appointment.getAppointmentStart().getDayOfYear());
-            System.out.println("appointment week " + (appointment.getAppointmentStart().getDayOfYear() / 7 + 1));
-            if (appointment.getAppointmentStart().getDayOfYear() / 7 + 1 == week && appointment.getAppointmentStart().getYear() == year) {
+       getAllAppointments().forEach(appointment -> {
+            if ((Math.ceil(appointment.getAppointmentStart().getDayOfYear()/7)+1) == currentWeek && appointment.getAppointmentStart().getYear() == year) {
                 filteredAppointments.add(appointment);
             }
         });
@@ -210,7 +172,7 @@ public class HomeController implements Initializable {
      */
     @FXML
     private void handleAllApptView(ActionEvent actionEvent) {
-        appointmentTable.setItems(appointments);
+        appointmentTable.setItems(getAllAppointments());
     }
 
     @FXML
@@ -230,6 +192,17 @@ public class HomeController implements Initializable {
 
     @FXML
     private void handleDeleteCustomerBtn(ActionEvent actionEvent) {
+        Customer selectedCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+        if(selectedCustomer != null) {
+            Optional<ButtonType> result = AlertUtils.alertConfirmation("Delete Customer", "Are you sure you want to delete this customer?");
+            if (result.get() == ButtonType.OK) {
+                Query.deleteCustomer(selectedCustomer.getCustomerId());
+                setCustomerTable();
+            }
+
+        } else {
+            AlertUtils.alertError("No customer selected", "Please select a customer to delete");
+        }
     }
 
     @FXML

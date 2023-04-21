@@ -25,12 +25,12 @@
             <children>
                 <Group>
                     <children>
-                        <TextField disable="true" editable="false" layoutX="126.0" promptText="Disabled - Auto Generated" />
                         <Label layoutY="5.0" text="Customer ID" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
+                  <ComboBox fx:id="customerIdCombo" layoutX="126.0" prefWidth="150.0" />
                     </children>
                 </Group>
                 <Group>
@@ -120,7 +120,7 @@
                                                 <Font size="10.0" />
                                             </font>
                                         </Label>
-                                        <ComboBox prefWidth="50.0" />
+                                        <ComboBox fx:id="startHourCombo" prefHeight="26.0" prefWidth="75.0" />
                                     </children>
                                 </VBox>
                                 <VBox>
@@ -130,7 +130,7 @@
                                                 <Font size="10.0" />
                                             </font>
                                         </Label>
-                                        <ComboBox prefWidth="50.0" />
+                                        <ComboBox fx:id="startMinCombo" prefWidth="75.0" />
                                     </children>
                                 </VBox>
                                 <VBox>
@@ -140,7 +140,7 @@
                                                 <Font size="10.0" />
                                             </font>
                                         </Label>
-                                        <ComboBox prefWidth="50.0" />
+                                        <ComboBox fx:id="startSecondCombo" prefWidth="75.0" />
                                     </children>
                                 </VBox>
                             </children>
@@ -164,7 +164,7 @@
                                                 <Font size="10.0" />
                                             </font>
                                         </Label>
-                                        <ComboBox prefWidth="50.0" />
+                                        <ComboBox fx:id="endHourCombo" onAction="#handleEndHourCombo" prefWidth="75.0" />
                                     </children>
                                 </VBox>
                                 <VBox>
@@ -174,7 +174,7 @@
                                                 <Font size="10.0" />
                                             </font>
                                         </Label>
-                                        <ComboBox prefWidth="50.0" />
+                                        <ComboBox fx:id="endMinuteCombo" prefWidth="75.0" />
                                     </children>
                                 </VBox>
                                 <VBox>
@@ -184,7 +184,7 @@
                                                 <Font size="10.0" />
                                             </font>
                                         </Label>
-                                        <ComboBox prefWidth="50.0" />
+                                        <ComboBox fx:id="endSecondCombo" prefWidth="75.0" />
                                     </children>
                                 </VBox>
                             </children>

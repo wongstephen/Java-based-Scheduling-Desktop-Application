@@ -1,4 +1,4 @@
-package cms.stephenwongc195.utils;
+package cms.stephenwongc195.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

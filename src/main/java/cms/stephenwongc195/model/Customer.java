@@ -64,4 +64,9 @@ public class Customer {
     public void setCustomerDivisionId(int customerDivisionId) {
         this.customerDivisionId = customerDivisionId;
     }
+
+    @Override
+    public String toString() {
+        return "["+customerId + "] " + customerName;
+    }
 }

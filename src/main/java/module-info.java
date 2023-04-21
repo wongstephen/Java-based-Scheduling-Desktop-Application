@@ -10,4 +10,6 @@ module cms.stephenwongc195 {
     exports cms.stephenwongc195.controller;
     exports cms.stephenwongc195.model;
     exports cms.stephenwongc195;
+    exports cms.stephenwongc195.dao;
+    opens cms.stephenwongc195.dao to javafx.fxml;
 }

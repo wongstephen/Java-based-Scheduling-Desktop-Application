@@ -1,6 +1,6 @@
 package cms.stephenwongc195.controller;
 
-import cms.stephenwongc195.utils.DBUtils;
+import cms.stephenwongc195.dao.Query;
 import cms.stephenwongc195.utils.Navigate;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -105,10 +105,10 @@ public class LoginController implements Initializable {
     @FXML
     private void handleLogin(ActionEvent actionEvent) throws IOException, SQLException {
         boolean login = false;
-        if (DBUtils.login(login__username.getText(), login__password.getText())) {
+        if (Query.login(login__username.getText(), login__password.getText())) {
             login = true;
             username = login__username.getText();
-            DBUtils.getUserId();
+            Query.getUserId();
         } else {
             login = false;
             if (globalLocale.contains("fr")) {

@@ -1,13 +1,14 @@
-package cms.stephenwongc195.utils;
+package cms.stephenwongc195.dao;
 
 import cms.stephenwongc195.controller.LoginController;
+import cms.stephenwongc195.dao.JDBC;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class DBUtils {
+public class Query {
     public static boolean login(String userName, String password) throws SQLException {
         Boolean login = false;
         JDBC.openConnection();
@@ -71,6 +72,21 @@ public class DBUtils {
            JDBC.closeConnection();
        }
        return 0;
+    }
+
+    public static int deleteCustomer (int customerId) {
+        try {
+            JDBC.openConnection();
+            String sql = "DELETE FROM customers WHERE Customer_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, customerId);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBC.closeConnection();
+        }
+        return 0;
     }
 
 
