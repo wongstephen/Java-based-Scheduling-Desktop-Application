@@ -4,6 +4,7 @@ import cms.stephenwongc195.model.Appointment;
 import cms.stephenwongc195.model.Customer;
 import cms.stephenwongc195.utils.AlertUtils;
 import cms.stephenwongc195.dao.Query;
+import cms.stephenwongc195.utils.Context;
 import cms.stephenwongc195.utils.Navigate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -56,8 +57,8 @@ public class HomeController implements Initializable {
     @FXML
     private TableColumn appointmentUserIdCol;
     @FXML
+
     private Label welcomeUserLabel;
-//    ObservableList<Appointment> appointments = FXCollections.observableArrayList();
     ObservableList<Appointment> filteredAppointments = FXCollections.observableArrayList();
 
     @FXML
@@ -74,7 +75,6 @@ public class HomeController implements Initializable {
     private TableColumn customerPhoneCol;
     @FXML
     private TableColumn customerDivisionIdCol;
-    ObservableList<Customer> customers = FXCollections.observableArrayList();
 
     @FXML
     private RadioButton apptMonthRadio;
@@ -91,7 +91,7 @@ public class HomeController implements Initializable {
         if (globalLocale.contains("fr")) home___title.setText("Système de gestion de la clientèle"); // French Locale custom title
         setAppointmentTable(); // Get appointments from DB and populates appointments table
         setCustomerTable(); // Get customers from DB and populates customers table
-        welcomeUserLabel.setText("Welcome, " + LoginController.username); // Welcome username on home screen
+        welcomeUserLabel.setText("Welcome, " + Context.getUserName()); // Welcome username on home screen
         homeZoneIdLabel.setText(ZonedDateTime.now().getZone().toString()); // Set Zone ID label
     }
 

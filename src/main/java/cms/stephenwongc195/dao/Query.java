@@ -2,6 +2,7 @@ package cms.stephenwongc195.dao;
 
 import cms.stephenwongc195.controller.LoginController;
 import cms.stephenwongc195.dao.JDBC;
+import cms.stephenwongc195.utils.Context;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 
 
 public class Query {
-    public static boolean login(String userName, String password) throws SQLException {
+    public static ResultSet login(String userName, String password) throws SQLException {
         Boolean login = false;
         JDBC.openConnection();
         String sql = "select * from users where User_Name = ? and Password = ?";
@@ -17,17 +18,7 @@ public class Query {
         ps.setString(1, userName);
         ps.setString(2, password);
         ResultSet rs = ps.executeQuery();
-        return rs.next();
-    }
-
-    public static void getUserId() throws SQLException {
-        JDBC.openConnection();
-        String sql = "select User_ID from users";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            LoginController.userId = rs.getInt("User_ID");
-        }
+        return rs;
     }
 
     public static ResultSet tableQuery(String tableName) throws SQLException {
@@ -63,7 +54,7 @@ public class Query {
             ps.setString(2, address);
             ps.setString(3, postalCode);
             ps.setString(4, phone);
-            ps.setString(5, LoginController.username);
+            ps.setString(5, Context.getUserName());
             ps.setInt(6, divisionId);
             return ps.executeUpdate();
        } catch (SQLException e) {

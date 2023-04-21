@@ -25,6 +25,26 @@
             <children>
                 <Group>
                     <children>
+                        <TextField disable="true" editable="false" layoutX="126.0" promptText="Disabled - Auto Generated" />
+                        <Label layoutY="5.0" text="Appointment ID" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Group>
+                <Group>
+                    <children>
+                        <TextField fx:id="userIdTF" disable="true" editable="false" layoutX="126.0" promptText="Disabled - Auto Generated" />
+                        <Label layoutY="5.0" text="User ID" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Group>
+                <Group>
+                    <children>
                         <Label layoutY="5.0" text="Customer ID" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="12.0" />
@@ -35,22 +55,12 @@
                 </Group>
                 <Group>
                     <children>
-                        <TextField disable="true" editable="false" layoutX="126.0" promptText="Disabled - Auto Generated" />
-                        <Label layoutY="5.0" text="User ID" textFill="WHITE">
+                        <Label layoutY="5.0" text="Contact" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                    </children>
-                </Group>
-                <Group>
-                    <children>
-                        <TextField disable="true" editable="false" layoutX="126.0" promptText="Disabled - Auto Generated" />
-                        <Label layoutY="5.0" text="Appointment ID" textFill="WHITE">
-                            <font>
-                                <Font name="System Bold" size="12.0" />
-                            </font>
-                        </Label>
+                        <ComboBox fx:id="contactCombo" layoutX="126.0" prefWidth="150.0" />
                     </children>
                 </Group>
                 <Group>
@@ -85,22 +95,12 @@
                 </Group>
                 <Group>
                     <children>
-                        <Label layoutY="5.0" text="Contact" textFill="WHITE">
-                            <font>
-                                <Font name="System Bold" size="12.0" />
-                            </font>
-                        </Label>
-                        <ComboBox layoutX="126.0" prefWidth="150.0" />
-                    </children>
-                </Group>
-                <Group>
-                    <children>
-                        <ComboBox layoutX="126.0" prefWidth="150.0" />
                         <Label layoutY="5.0" text="Location" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
+                  <TextField layoutX="126.0" />
                     </children>
                 </Group>
                 <Group>

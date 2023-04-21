@@ -54,11 +54,15 @@ public class ModCustomerController implements Initializable {
 
         int divisionId = selectedCustomer.getCustomerDivisionId();
         Division currentDivision = allDivisions.filtered(division -> division.getDivisionId() == divisionId).get(0);
-        divisionCombo.setValue(currentDivision);
 
         int countryId = currentDivision.getCountryId();
         Country currentCountry = allCountries.filtered(country -> country.getCountryId() == countryId).get(0);
         countryCombo.setValue(currentCountry);
+
+        ObservableList<Division> result = lookupDivisionByCountry(countryCombo.getValue().getCountryId());
+        divisionCombo.setItems(result.sorted());
+
+        divisionCombo.setValue(currentDivision);
     }
 
     /**
@@ -71,6 +75,9 @@ public class ModCustomerController implements Initializable {
         ObservableList<Division> result = lookupDivisionByCountry(countryCombo.getValue().getCountryId());
         divisionCombo.setItems(result.sorted());
     }
+
+
+
 
     public void onSave(ActionEvent actionEvent) {
     }

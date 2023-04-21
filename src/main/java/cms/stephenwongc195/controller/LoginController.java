@@ -1,6 +1,7 @@
 package cms.stephenwongc195.controller;
 
 import cms.stephenwongc195.dao.Query;
+import cms.stephenwongc195.utils.Context;
 import cms.stephenwongc195.utils.Navigate;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.scene.control.TextField;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -23,8 +25,6 @@ import static cms.stephenwongc195.utils.AlertUtils.alertError;
 
 public class LoginController implements Initializable {
     public static String globalLocale = "en_US";
-    public static String username;
-    public static int userId;
 
     @FXML
     private TextField login__username;
@@ -104,12 +104,15 @@ public class LoginController implements Initializable {
      */
     @FXML
     private void handleLogin(ActionEvent actionEvent) throws IOException, SQLException {
-        boolean login = false;
-        if (Query.login(login__username.getText(), login__password.getText())) {
+        ResultSet rs = Query.login(login__username.getText(), login__password.getText());
+        boolean login;
+        if (rs.next()) {
             login = true;
-            username = login__username.getText();
-            Query.getUserId();
-        } else {
+            String username = rs.getString("User_Name");
+            int userId = rs.getInt("User_Id");
+            Context.setUserName(username);
+            Context.setUserId(userId);
+            } else {
             login = false;
             if (globalLocale.contains("fr")) {
                 alertError(alertFr1, alertFr2);

@@ -1,26 +1,26 @@
 package cms.stephenwongc195.controller;
 
+import cms.stephenwongc195.model.Contact;
 import cms.stephenwongc195.model.Customer;
+import cms.stephenwongc195.utils.Context;
 import cms.stephenwongc195.utils.Navigate;
 import cms.stephenwongc195.utils.TimeUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Time;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.ResourceBundle;
 
+import static cms.stephenwongc195.dao.ContactDao.getAllContacts;
 import static cms.stephenwongc195.dao.CustomerDao.getAllCustomers;
 
 public class AddAppointmentController implements Initializable {
+    @FXML
+    private TextField userIdTF;
     public ComboBox appointmentTypeCombo;
     public ComboBox startHourCombo;
     public ComboBox startMinCombo;
@@ -29,16 +29,19 @@ public class AddAppointmentController implements Initializable {
     public ComboBox endMinuteCombo;
     public ComboBox endSecondCombo;
     public ComboBox<Customer> customerIdCombo;
-
+    public ComboBox<Contact> contactCombo;
     String[] appointmentTypes = {"Planning", "Debrief", "Consultation", "Follow-up",  "Support", "Training", "Meeting", "Presentation", "Interview", "Feedback", "Other"};
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         for (String type : appointmentTypes) {
             appointmentTypeCombo.getItems().add(type);
         }
+        userIdTF.setText(String.valueOf(Context.getUserId()));
         populateHourCombo();
         populateMinuteSecondCombo();
         populateCustomerCombo();
+        populateContactCombo();
     }
 
     private void populateHourCombo() {
@@ -64,6 +67,10 @@ public class AddAppointmentController implements Initializable {
 
     private void populateCustomerCombo() {
         customerIdCombo.setItems(getAllCustomers().sorted());
+    }
+
+    private void populateContactCombo() {
+        contactCombo.setItems(getAllContacts().sorted());
     }
 
     public void handleEndHourCombo(ActionEvent actionEvent) {
