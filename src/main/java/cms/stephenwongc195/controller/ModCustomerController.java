@@ -1,8 +1,8 @@
 package cms.stephenwongc195.controller;
 
 import cms.stephenwongc195.model.Country;
+import cms.stephenwongc195.model.Customer;
 import cms.stephenwongc195.model.Division;
-import cms.stephenwongc195.utils.AlertUtils;
 import cms.stephenwongc195.utils.DBUtils;
 import cms.stephenwongc195.utils.Navigate;
 import javafx.collections.FXCollections;
@@ -17,14 +17,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
+public class ModCustomerController implements Initializable {
+    public static Customer selectedCustomer = null;
+    public static void setSelectedCustomer(Customer customer) {
+        selectedCustomer = customer;
+    }
 
-public class AddCustomerController implements Initializable {
     ObservableList<Country> countryList = FXCollections.observableArrayList();
     ObservableList<Division> divisionList = FXCollections.observableArrayList();
+
+    @FXML
+    private TextField customerIdTF;
     @FXML
     private TextField customerNameTF;
     @FXML
@@ -42,6 +47,18 @@ public class AddCustomerController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         divisionCombo.disableProperty().bind(countryCombo.valueProperty().isNull()); //disables division combo box until country is selected
         getCountryDivisionList();
+        setCustomerData();
+
+    }
+
+    private void setCustomerData() {
+        customerIdTF.setText(String.valueOf(selectedCustomer.getCustomerId()));
+        customerNameTF.setText(selectedCustomer.getCustomerName());
+        addressTF.setText(selectedCustomer.getCustomerAddress());
+        postalTF.setText(selectedCustomer.getCustomerPostalCode());
+        phoneTF.setText(selectedCustomer.getCustomerPhone());
+        System.out.println(divisionList.indexOf(selectedCustomer.getCustomerDivisionId()));
+        System.out.println(divisionList);
     }
 
     /**
@@ -80,61 +97,7 @@ public class AddCustomerController implements Initializable {
         divisionCombo.setItems(divisionListFiltered.sorted());
     }
 
-    /**
-     * Saves customer to database
-     *
-     * @param actionEvent
-     */
-    @FXML
-    private void onSave(ActionEvent actionEvent) throws IOException {
-        List<String> exception = new ArrayList<String>();
-        Boolean hasException = false;
-        if (customerNameTF.getText().isBlank()) {
-            exception.add("Customer name is required");
-            hasException = true;
-        } else {
-            hasException = false;
-        }
-        if (addressTF.getText().isBlank()) {
-            exception.add("Address is required");
-            hasException = true;
-        } else {
-            hasException = false;
-        }
-        if (postalTF.getText().isBlank()) {
-            exception.add("Address is required");
-            hasException = true;
-        } else {
-            hasException = false;
-        }
-        if (phoneTF.getText().isBlank()) {
-            exception.add("Phone Number is required");
-            hasException = true;
-        } else {
-            hasException = false;
-        }
-        if (countryCombo.getValue() == null) {
-            exception.add("Country is required");
-            hasException = true;
-        } else {
-            hasException = false;
-        }
-        if (divisionCombo.getValue() == null) {
-            exception.add("Division is required");
-            hasException = true;
-        } else {
-            hasException = false;
-        }
-
-        if (hasException) {
-            String exceptionString = String.join("\n", exception);
-            AlertUtils.alertError("Please fill out all required fields before submitting the form.", exceptionString);
-        } else {
-            int recordsAdded = DBUtils.insertCustomer(customerNameTF.getText(), addressTF.getText(), postalTF.getText(), phoneTF.getText(), divisionCombo.getValue().getDivisionId());
-            System.out.println("Records added: " + recordsAdded);
-            AlertUtils.alertInformation("Customer added successfully", "Customer " + customerNameTF.getText() + " has been added successfully.");
-            Navigate.changeScene(actionEvent, "home");
-        }
+    public void onSave(ActionEvent actionEvent) {
     }
 
     /**

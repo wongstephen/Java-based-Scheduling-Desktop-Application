@@ -2,6 +2,7 @@ package cms.stephenwongc195.controller;
 
 import cms.stephenwongc195.model.Appointment;
 import cms.stephenwongc195.model.Customer;
+import cms.stephenwongc195.utils.AlertUtils;
 import cms.stephenwongc195.utils.Navigate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -188,10 +189,13 @@ public class HomeController implements Initializable {
     private void handleWeekApptView(ActionEvent actionEvent) {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
-        int week = (now.getDayOfYear() / 7) + 1;
+        int week = (now.getDayOfYear() / 7 + 1) ;
+
         System.out.println("Week: " + week);
         filteredAppointments.clear();
         appointments.forEach(appointment -> {
+            System.out.println("appointment date of year " + appointment.getAppointmentStart().getDayOfYear());
+            System.out.println("appointment week " + (appointment.getAppointmentStart().getDayOfYear() / 7 + 1));
             if (appointment.getAppointmentStart().getDayOfYear() / 7 + 1 == week && appointment.getAppointmentStart().getYear() == year) {
                 filteredAppointments.add(appointment);
             }
@@ -216,6 +220,12 @@ public class HomeController implements Initializable {
 
     @FXML
     private void handleUpdateCustomerBtn(ActionEvent actionEvent) {
+        ModCustomerController.setSelectedCustomer((Customer) customerTable.getSelectionModel().getSelectedItem());
+        if(ModCustomerController.selectedCustomer != null) {
+            Navigate.changeScene(actionEvent, "modCustomer");
+        } else {
+            AlertUtils.alertError("No customer selected", "Please select a customer to modify");
+        }
     }
 
     @FXML
