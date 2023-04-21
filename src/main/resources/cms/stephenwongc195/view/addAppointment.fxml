@@ -15,7 +15,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cms.stephenwongc195.controller.AddAppointmentController">
     <children>
-        <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#1f93ff00" height="640.0" layoutX="194.0" layoutY="64.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" width="640.0" />
+        <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#1f93ff00" height="720.0" layoutX="192.0" layoutY="32.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" width="640.0" />
         <Label layoutX="270.0" layoutY="77.0" text="Add Appointment" textAlignment="CENTER" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="36.0" />
@@ -65,7 +65,7 @@
                 </Group>
                 <Group>
                     <children>
-                        <TextField layoutX="126.0" prefWidth="200.0" />
+                        <TextField fx:id="titleTF" layoutX="126.0" prefWidth="200.0" />
                         <Label layoutY="5.0" text="Title" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="12.0" />
@@ -75,7 +75,7 @@
                 </Group>
                 <Group>
                     <children>
-                        <TextField layoutX="126.0" prefHeight="25.0" prefWidth="200.0" />
+                        <TextField fx:id="descriptionTF" layoutX="126.0" prefHeight="25.0" prefWidth="200.0" />
                         <Label layoutY="5.0" text="Description" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="12.0" />
@@ -100,12 +100,12 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Label>
-                  <TextField layoutX="126.0" />
+                  <TextField fx:id="locationTF" layoutX="126.0" />
                     </children>
                 </Group>
                 <Group>
                     <children>
-                        <DatePicker layoutX="126.0" prefHeight="25.0" prefWidth="150.0" />
+                        <DatePicker fx:id="startDateDp" layoutX="126.0" prefHeight="25.0" prefWidth="150.0" />
                         <Label layoutY="5.0" text="Start" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="12.0" />
@@ -149,7 +149,7 @@
                 </Group>
                 <Group>
                     <children>
-                        <DatePicker layoutX="126.0" prefHeight="25.0" prefWidth="150.0" />
+                        <DatePicker fx:id="endDateDp" layoutX="126.0" prefHeight="25.0" prefWidth="150.0" />
                         <Label layoutY="5.0" text="End" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="12.0" />
@@ -193,12 +193,12 @@
                 </Group>
             </children>
         </VBox>
-        <Button layoutX="737.0" layoutY="660.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="79.0" style="-fx-background-color: white;" text="Save">
+        <Button layoutX="474.0" layoutY="666.0" mnemonicParsing="false" onAction="#handleSaveBtn" prefHeight="29.0" prefWidth="79.0" style="-fx-background-color: white;" text="Save">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="789.0" layoutY="89.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleCancelBtn" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: white; -fx-background-radius: 1000;" text="X" textFill="#008fd5">
+        <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="789.0" layoutY="47.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleCancelBtn" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: white; -fx-background-radius: 1000;" text="X" textFill="#008fd5">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>

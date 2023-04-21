@@ -132,7 +132,12 @@ public class ModCustomerController implements Initializable {
             AlertUtils.alertError("Please fill out all required fields before submitting the form.", exceptionString);
         } else {
             int recordsUpdated = Query.updateCustomer(customerNameTF.getText(), addressTF.getText(), postalTF.getText(), phoneTF.getText(), divisionCombo.getValue().getDivisionId(), Integer.parseInt(customerIdTF.getText()));
-             AlertUtils.alertInformation("Customer updated successfully", "Customer " + customerNameTF.getText() + " has been updated successfully.");
+            if(recordsUpdated > 0){
+                AlertUtils.alertInformation("Customer updated successfully", "Customer " + customerNameTF.getText() + " has been updated successfully.");
+            } else {
+                AlertUtils.alertError("Customer update failed", "Customer " + customerNameTF.getText() + " was not updated successfully. Try again later");
+                return;
+            }
             Navigate.changeScene(actionEvent, "home");
         }
     }

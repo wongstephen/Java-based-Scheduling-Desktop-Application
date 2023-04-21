@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static cms.stephenwongc195.controller.LoginController.globalLocale;
-import static cms.stephenwongc195.dao.AppointmentDao.getAllAppointments;
+import static cms.stephenwongc195.dao.AppointmentDao.*;
 import static cms.stephenwongc195.dao.CustomerDao.getAllCustomers;
 import static cms.stephenwongc195.dao.CustomerDao.updateAllCustomers;
 
@@ -88,6 +88,7 @@ public class HomeController implements Initializable {
         setCustomerTable(); // Get customers from DB and populates customers table
         welcomeUserLabel.setText("Welcome, " + Context.getUserName()); // Welcome username on home screen
         homeZoneIdLabel.setText(ZonedDateTime.now().getZone().toString()); // Set Zone ID label
+
     }
 
     /**
@@ -128,17 +129,7 @@ public class HomeController implements Initializable {
      */
     @FXML
     private void handleMonthApptView(ActionEvent actionEvent) {
-        LocalDateTime now = LocalDateTime.now();
-        int year = now.getYear();
-        int month = now.getMonthValue();
-        filteredAppointments.clear();
-        getAllAppointments().forEach(appointment -> {
-            if (appointment.getAppointmentStart().getMonthValue() == month && appointment.getAppointmentStart().getYear() == year) {
-                filteredAppointments.add(appointment);
-                System.out.println("Appointment added to filtered list");
-            }
-        });
-        appointmentTable.setItems(filteredAppointments);
+        appointmentTable.setItems(getCurrentMonthAppointments());
     }
 
     /**
@@ -148,16 +139,7 @@ public class HomeController implements Initializable {
      */
     @FXML
     private void handleWeekApptView(ActionEvent actionEvent) {
-        LocalDateTime now = LocalDateTime.now();
-        int year = now.getYear();
-        int currentWeek = (int) Math.ceil(now.getDayOfYear() / 7) + 1;
-        filteredAppointments.clear();
-        getAllAppointments().forEach(appointment -> {
-            if ((Math.ceil(appointment.getAppointmentStart().getDayOfYear() / 7) + 1) == currentWeek && appointment.getAppointmentStart().getYear() == year) {
-                filteredAppointments.add(appointment);
-            }
-        });
-        appointmentTable.setItems(filteredAppointments);
+        appointmentTable.setItems(getCurrentWeekAppointments());
     }
 
     /**

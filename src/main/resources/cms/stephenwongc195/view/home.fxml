@@ -44,18 +44,18 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                                 </TableView>
-                                <HBox layoutX="14.0" layoutY="9.0" prefHeight="23.0" prefWidth="267.0" spacing="10.0">
+                                <HBox layoutX="14.0" layoutY="9.0" prefHeight="23.0" prefWidth="346.0" spacing="10.0">
                                     <children>
-                                        <Label prefHeight="17.0" prefWidth="48.0" text="view by">
+                                        <Label prefHeight="17.0" prefWidth="81.0" text="view by">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <RadioButton fx:id="apptMonthRadio" mnemonicParsing="false" onAction="#handleMonthApptView" text="month">
+                                        <RadioButton fx:id="apptMonthRadio" mnemonicParsing="false" onAction="#handleMonthApptView" prefHeight="17.0" prefWidth="110.0" text="current month">
                                  <toggleGroup>
                                     <ToggleGroup fx:id="apptGroup" />
                                  </toggleGroup></RadioButton>
-                                        <RadioButton fx:id="apptWeekRadio" mnemonicParsing="false" onAction="#handleWeekApptView" prefHeight="17.0" prefWidth="55.0" text="week" toggleGroup="$apptGroup" />
+                                        <RadioButton fx:id="apptWeekRadio" mnemonicParsing="false" onAction="#handleWeekApptView" prefHeight="17.0" prefWidth="110.0" text="current week" toggleGroup="$apptGroup" />
                                         <RadioButton fx:id="apptAllRadio" mnemonicParsing="false" onAction="#handleAllApptView" prefHeight="17.0" prefWidth="49.0" selected="true" text="all" toggleGroup="$apptGroup" />
                                     </children>
                                 </HBox>

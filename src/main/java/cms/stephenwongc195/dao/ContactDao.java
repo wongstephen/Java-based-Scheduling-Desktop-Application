@@ -35,7 +35,6 @@ public class ContactDao {
                         rs.getString("Email")
                 );
                 allContacts.add(contact);
-                System.out.println("Contact added");
             }
         } catch (SQLException e) {
             e.printStackTrace();

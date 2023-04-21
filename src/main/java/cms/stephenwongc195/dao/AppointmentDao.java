@@ -6,9 +6,40 @@ import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class AppointmentDao {
-    static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> currentWeekAppointments = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> currentMonthAppointments = FXCollections.observableArrayList();
+
+    public static ObservableList<Appointment> getCurrentWeekAppointments(){
+        LocalDateTime now = LocalDateTime.now();
+        int currentYear = now.getYear();
+        double currentWeek = Math.ceil((double)now.getDayOfYear() / 7);
+        currentWeekAppointments.clear();
+        getAllAppointments().forEach(appointment -> {
+            double appointmentWeek = (Math.ceil( (double) appointment.getAppointmentStart().getDayOfYear() / 7));
+            double appointmentYear = appointment.getAppointmentStart().getYear();
+            if (appointmentWeek == currentWeek && appointmentYear == currentYear) {
+                currentWeekAppointments.add(appointment);
+            }
+        });
+        return currentWeekAppointments;
+    }
+
+    public static ObservableList<Appointment> getCurrentMonthAppointments(){
+        LocalDateTime now = LocalDateTime.now();
+        int currentYear = now.getYear();
+        int currentMonth = now.getMonthValue();
+        currentMonthAppointments.clear();
+        getAllAppointments().forEach(appointment -> {
+            if (appointment.getAppointmentStart().getMonthValue() == currentMonth && appointment.getAppointmentStart().getYear() == currentYear) {
+                currentMonthAppointments.add(appointment);
+                  }
+        });
+        return currentMonthAppointments;
+    }
 
     public static void addAppointment(Appointment appointment) {
         allAppointments.add(appointment);
