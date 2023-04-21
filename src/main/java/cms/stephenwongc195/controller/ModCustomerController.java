@@ -1,8 +1,10 @@
 package cms.stephenwongc195.controller;
 
+import cms.stephenwongc195.dao.Query;
 import cms.stephenwongc195.model.Country;
 import cms.stephenwongc195.model.Customer;
 import cms.stephenwongc195.model.Division;
+import cms.stephenwongc195.utils.AlertUtils;
 import cms.stephenwongc195.utils.Navigate;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,6 +15,8 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import static cms.stephenwongc195.dao.LocationDao.*;
@@ -77,9 +81,60 @@ public class ModCustomerController implements Initializable {
     }
 
 
+    /**
+     * Saves customer to database
+     *
+     * @param actionEvent
+     */
+    @FXML
+    private void onSave(ActionEvent actionEvent) throws IOException {
+        List<String> exception = new ArrayList<String>();
+        Boolean hasException;
+        if (customerNameTF.getText().isBlank()) {
+            exception.add("Customer name is required");
+            hasException = true;
+        } else {
+            hasException = false;
+        }
+        if (addressTF.getText().isBlank()) {
+            exception.add("Address is required");
+            hasException = true;
+        } else {
+            hasException = false;
+        }
+        if (postalTF.getText().isBlank()) {
+            exception.add("Address is required");
+            hasException = true;
+        } else {
+            hasException = false;
+        }
+        if (phoneTF.getText().isBlank()) {
+            exception.add("Phone Number is required");
+            hasException = true;
+        } else {
+            hasException = false;
+        }
+        if (countryCombo.getValue() == null) {
+            exception.add("Country is required");
+            hasException = true;
+        } else {
+            hasException = false;
+        }
+        if (divisionCombo.getValue() == null) {
+            exception.add("Division is required");
+            hasException = true;
+        } else {
+            hasException = false;
+        }
 
-
-    public void onSave(ActionEvent actionEvent) {
+        if (hasException) {
+            String exceptionString = String.join("\n", exception);
+            AlertUtils.alertError("Please fill out all required fields before submitting the form.", exceptionString);
+        } else {
+            int recordsUpdated = Query.updateCustomer(customerNameTF.getText(), addressTF.getText(), postalTF.getText(), phoneTF.getText(), divisionCombo.getValue().getDivisionId(), Integer.parseInt(customerIdTF.getText()));
+             AlertUtils.alertInformation("Customer updated successfully", "Customer " + customerNameTF.getText() + " has been updated successfully.");
+            Navigate.changeScene(actionEvent, "home");
+        }
     }
 
     /**

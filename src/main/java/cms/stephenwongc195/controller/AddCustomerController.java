@@ -18,9 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static cms.stephenwongc195.dao.CustomerDao.updateAllCustomers;
 import static cms.stephenwongc195.dao.LocationDao.*;
-
 
 public class AddCustomerController implements Initializable {
     @FXML

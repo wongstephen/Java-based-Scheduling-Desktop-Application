@@ -46,7 +46,7 @@ public class Query {
     }
 
     public static int insertCustomer(String customerName, String address, String postalCode, String phone, int divisionId)  {
-       try {
+        try {
             JDBC.openConnection();
             String sql = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Created_By, Division_ID) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -57,12 +57,32 @@ public class Query {
             ps.setString(5, Context.getUserName());
             ps.setInt(6, divisionId);
             return ps.executeUpdate();
-       } catch (SQLException e) {
-           e.printStackTrace();
-       } finally {
-           JDBC.closeConnection();
-       }
-       return 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBC.closeConnection();
+        }
+        return 0;
+    }
+
+    public static int updateCustomer(String customerName, String address, String postalCode, String phone, int divisionId, int customerId)  {
+        try {
+            JDBC.openConnection();
+            String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, customerName);
+            ps.setString(2, address);
+            ps.setString(3, postalCode);
+            ps.setString(4, phone);
+            ps.setInt(5, divisionId);
+            ps.setInt(6, customerId);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBC.closeConnection();
+        }
+        return 0;
     }
 
     public static int deleteCustomer (int customerId) {
@@ -80,6 +100,19 @@ public class Query {
         return 0;
     }
 
-
-
+    public static boolean associatedAppointmentsByCustomer(int customerId) {
+        try {
+            JDBC.openConnection();
+            String sql = "SELECT * FROM customers JOIN appointments ON customers.customer_id = appointments.customer_id where customers.customer_id = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, customerId);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBC.closeConnection();
+        }
+        return false;
+    }
 }

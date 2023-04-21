@@ -1,9 +1,9 @@
 package cms.stephenwongc195.controller;
 
+import cms.stephenwongc195.dao.Query;
 import cms.stephenwongc195.model.Appointment;
 import cms.stephenwongc195.model.Customer;
 import cms.stephenwongc195.utils.AlertUtils;
-import cms.stephenwongc195.dao.Query;
 import cms.stephenwongc195.utils.Context;
 import cms.stephenwongc195.utils.Navigate;
 import javafx.collections.FXCollections;
@@ -16,22 +16,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 
 import static cms.stephenwongc195.controller.LoginController.globalLocale;
 import static cms.stephenwongc195.dao.AppointmentDao.getAllAppointments;
 import static cms.stephenwongc195.dao.CustomerDao.getAllCustomers;
 import static cms.stephenwongc195.dao.CustomerDao.updateAllCustomers;
-import static cms.stephenwongc195.dao.Query.tableQuery;
 
 public class HomeController implements Initializable {
+    ObservableList<Appointment> filteredAppointments = FXCollections.observableArrayList();
     @FXML
     private Label home___title;
     @FXML
@@ -59,8 +55,6 @@ public class HomeController implements Initializable {
     @FXML
 
     private Label welcomeUserLabel;
-    ObservableList<Appointment> filteredAppointments = FXCollections.observableArrayList();
-
     @FXML
     private TableView customerTable;
     @FXML
@@ -88,7 +82,8 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (globalLocale.contains("fr")) home___title.setText("Système de gestion de la clientèle"); // French Locale custom title
+        if (globalLocale.contains("fr"))
+            home___title.setText("Système de gestion de la clientèle"); // French Locale custom title
         setAppointmentTable(); // Get appointments from DB and populates appointments table
         setCustomerTable(); // Get customers from DB and populates customers table
         welcomeUserLabel.setText("Welcome, " + Context.getUserName()); // Welcome username on home screen
@@ -116,14 +111,14 @@ public class HomeController implements Initializable {
      * On load, populates the customer table with all customers from the DB
      */
     private void setCustomerTable() {
-            updateAllCustomers(); // Update all customers
-            customerTable.setItems(getAllCustomers());
-            customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-            customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-            customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
-            customerPostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
-            customerPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
-            customerDivisionIdCol.setCellValueFactory(new PropertyValueFactory<>("customerDivisionId"));
+        updateAllCustomers(); // Update all customers
+        customerTable.setItems(getAllCustomers());
+        customerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        customerNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
+        customerPostalCodeCol.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
+        customerPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
+        customerDivisionIdCol.setCellValueFactory(new PropertyValueFactory<>("customerDivisionId"));
     }
 
     /**
@@ -157,8 +152,8 @@ public class HomeController implements Initializable {
         int year = now.getYear();
         int currentWeek = (int) Math.ceil(now.getDayOfYear() / 7) + 1;
         filteredAppointments.clear();
-       getAllAppointments().forEach(appointment -> {
-            if ((Math.ceil(appointment.getAppointmentStart().getDayOfYear()/7)+1) == currentWeek && appointment.getAppointmentStart().getYear() == year) {
+        getAllAppointments().forEach(appointment -> {
+            if ((Math.ceil(appointment.getAppointmentStart().getDayOfYear() / 7) + 1) == currentWeek && appointment.getAppointmentStart().getYear() == year) {
                 filteredAppointments.add(appointment);
             }
         });
@@ -183,26 +178,37 @@ public class HomeController implements Initializable {
     @FXML
     private void handleUpdateCustomerBtn(ActionEvent actionEvent) {
         ModCustomerController.setSelectedCustomer((Customer) customerTable.getSelectionModel().getSelectedItem());
-        if(ModCustomerController.selectedCustomer != null) {
+        if (ModCustomerController.selectedCustomer != null) {
             Navigate.changeScene(actionEvent, "modCustomer");
         } else {
             AlertUtils.alertError("No customer selected", "Please select a customer to modify");
         }
     }
 
+    /**
+     * Handles the delete customer button click event and deletes the selected customer from the DB. If customer has associated appointments, an error is thrown.
+     *
+     * @param actionEvent
+     */
     @FXML
     private void handleDeleteCustomerBtn(ActionEvent actionEvent) {
         Customer selectedCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
-        if(selectedCustomer != null) {
+        if (selectedCustomer != null) {
             Optional<ButtonType> result = AlertUtils.alertConfirmation("Delete Customer", "Are you sure you want to delete this customer?");
             if (result.get() == ButtonType.OK) {
+                boolean hasAppointments = Query.associatedAppointmentsByCustomer(selectedCustomer.getCustomerId());
+                if (hasAppointments) {
+                    AlertUtils.alertError("Customer has appointments", "Please delete all appointments associated with this customer before deleting the customer");
+                    return;
+                }
                 Query.deleteCustomer(selectedCustomer.getCustomerId());
                 setCustomerTable();
             }
-
         } else {
             AlertUtils.alertError("No customer selected", "Please select a customer to delete");
         }
+
+
     }
 
     @FXML
