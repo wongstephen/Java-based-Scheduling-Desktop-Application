@@ -9,9 +9,16 @@ import java.sql.SQLException;
 
 import static cms.stephenwongc195.dao.Query.tableQuery;
 
+/**
+ * This class is a data access object for customers
+ */
 public class CustomerDao {
     static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
+    /**
+     * This method adds a customer to the allCustomers ObservableList
+     * @param customer
+     */
     public static void addCustomer(Customer customer) {
         allCustomers.add(customer);
     }

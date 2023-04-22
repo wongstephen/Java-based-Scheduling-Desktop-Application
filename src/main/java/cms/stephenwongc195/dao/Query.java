@@ -1,15 +1,22 @@
 package cms.stephenwongc195.dao;
 
-import cms.stephenwongc195.controller.LoginController;
-import cms.stephenwongc195.dao.JDBC;
 import cms.stephenwongc195.utils.Context;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
+/**
+ * This class contains methods for querying the database.
+ */
 public class Query {
+    /**
+     * This method queries the database for a user with the given username and password.
+     * @param userName
+     * @param password
+     * @return
+     * @throws SQLException
+     */
     public static ResultSet login(String userName, String password) throws SQLException {
         Boolean login = false;
         JDBC.openConnection();
@@ -21,6 +28,12 @@ public class Query {
         return rs;
     }
 
+    /**
+     * This method queries the database for a table indicated by the param
+     * @param tableName
+     * @return ResultSet of table
+     * @throws SQLException
+     */
     public static ResultSet tableQuery(String tableName) throws SQLException {
         JDBC.openConnection();
         String sql = "select * from " + tableName;
@@ -29,22 +42,16 @@ public class Query {
         return rs;
     }
 
-    public static ResultSet divisionQuery() throws SQLException {
-        JDBC.openConnection();
-        String sql = "SELECT * FROM first_level_divisions";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        return rs;
-    }
 
-    public static ResultSet countryQuery() throws SQLException {
-        JDBC.openConnection();
-        String sql = "SELECT * FROM countries";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        return rs;
-    }
-
+    /**
+     * This method inserts customer to the database.
+     * @param customerName
+     * @param address
+     * @param postalCode
+     * @param phone
+     * @param divisionId
+     * @return int of rows affected
+     */
     public static int insertCustomer(String customerName, String address, String postalCode, String phone, int divisionId)  {
         try {
             JDBC.openConnection();
@@ -65,6 +72,15 @@ public class Query {
         return 0;
     }
 
+    /**
+     * This method updates customer in the database.
+     * @param customerName
+     * @param address
+     * @param postalCode
+     * @param phone
+     * @param divisionId
+     * @return int of rows affected
+     */
     public static int updateCustomer(String customerName, String address, String postalCode, String phone, int divisionId, int customerId)  {
         try {
             JDBC.openConnection();
@@ -85,6 +101,11 @@ public class Query {
         return 0;
     }
 
+    /**
+     * This method inserts appointment to the database.
+     * @param customerId
+     * @return int of rows affected
+     */
     public static int deleteCustomer (int customerId) {
         try {
             JDBC.openConnection();
@@ -100,6 +121,11 @@ public class Query {
         return 0;
     }
 
+    /**
+     * THis method deletes appointment from the database.
+     * @param appointmentId
+     * @return
+     */
     public static int deleteAppointment (int appointmentId) {
         try {
             JDBC.openConnection();
@@ -116,6 +142,11 @@ public class Query {
         return 0;
     }
 
+    /**
+     * THis method checks if there are appointments associated with the customer.
+     * @param customerId
+     * @return boolean if there are appointments associated with the customer
+     */
     public static boolean associatedAppointmentsByCustomer(int customerId) {
         try {
             JDBC.openConnection();
@@ -132,6 +163,19 @@ public class Query {
         return false;
     }
 
+    /**
+     * This method inserts appointment to the database.
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param customerId
+     * @param userId
+     * @param contactId
+     * @return int of rows affected
+     */
     public static int insertAppointment(String title, String description, String location, String type, String start, String end, int customerId, int userId, int contactId) {
         try {
             JDBC.openConnection();
@@ -155,7 +199,24 @@ public class Query {
             JDBC.closeConnection();
         }
         return 0;
-    }public static int updateAppointment(String title, String description, String location, String type, String start, String end, int customerId, int userId, int contactId, int appointmentId) {
+    }
+
+
+    /**
+     * This method updates appointment in the database.
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param customerId
+     * @param userId
+     * @param contactId
+     * @param appointmentId
+     * @return returns int of rows affected
+     */
+    public static int updateAppointment(String title, String description, String location, String type, String start, String end, int customerId, int userId, int contactId, int appointmentId) {
         try {
             JDBC.openConnection();
             String sql = " UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Last_Update = NOW(), Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ?  WHERE appointment_id = ?";
