@@ -1,6 +1,5 @@
 package cms.stephenwongc195.utils;
 
-import cms.stephenwongc195.App;
 import cms.stephenwongc195.model.Appointment;
 import javafx.collections.ObservableList;
 
@@ -11,9 +10,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static cms.stephenwongc195.dao.AppointmentDao.getAllAppointments;
 
+/**
+ * This class is used to for time related functions.
+ */
 public class TimeUtil {
     /**
      * Converts an hour in EST to Local Time
+     *
      * @param estHour int EST Hour
      */
     public static ZonedDateTime convertEstToLocal(int estHour) {
@@ -39,17 +42,24 @@ public class TimeUtil {
     public static boolean hasAppointmentOverlap(LocalDateTime checkDateTime) {
         AtomicBoolean overlap = new AtomicBoolean(false);
         getAllAppointments().forEach(appointment -> {
-           LocalDateTime appointmentStart = appointment.getAppointmentStart();
-           LocalDateTime appointmentEnd = appointment.getAppointmentEnd();
-              if (checkDateTime.isAfter(appointmentStart) && checkDateTime.isBefore(appointmentEnd)) {
-                  overlap.set(true);
-              } else if (checkDateTime.isEqual(appointmentStart) || checkDateTime.isEqual(appointmentEnd)) {
-                  overlap.set(true);
-              }
+            LocalDateTime appointmentStart = appointment.getAppointmentStart();
+            LocalDateTime appointmentEnd = appointment.getAppointmentEnd();
+            if (checkDateTime.isAfter(appointmentStart) && checkDateTime.isBefore(appointmentEnd)) {
+                overlap.set(true);
+            } else if (checkDateTime.isEqual(appointmentStart) || checkDateTime.isEqual(appointmentEnd)) {
+                overlap.set(true);
+            }
         });
         return overlap.get();
     }
 
+    /**
+     * Checks if a given time overlaps with any appointments.
+     * Lambda filter expression to remove selected appointment then foreach lambda used to iterate through all appointments.
+     *
+     * @param checkDateTime
+     * @return boolean
+     */
     public static boolean modifyAppointmentOverlap(LocalDateTime checkDateTime, Appointment selectedAppointment) {
         AtomicBoolean overlap = new AtomicBoolean(false);
         ObservableList<Appointment> filtered = getAllAppointments().filtered(appointment -> appointment != selectedAppointment);

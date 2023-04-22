@@ -10,10 +10,18 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * This class is used to navigate between scenes.
+ */
 public abstract class Navigate {
     static Stage stage;
     static Parent scene;
 
+    /**
+     * Changes the scene to the specified location
+     * @param actionEvent
+     * @param location
+     */
     public static void changeScene(ActionEvent actionEvent, String location) {
         try {
             stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();

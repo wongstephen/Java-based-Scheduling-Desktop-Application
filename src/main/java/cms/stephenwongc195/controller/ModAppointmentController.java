@@ -63,10 +63,18 @@ public class ModAppointmentController implements Initializable {
     public static Appointment selectedAppointment;
     String[] appointmentTypes = {"Planning", "Debrief", "Consultation", "Follow-up",  "Support", "Training", "Meeting", "Presentation", "Interview", "Feedback", "Other"};
 
+    /**
+     * Context for selected appointment to edit.
+     *
+     */
     public static void setSelectedAppointment(Appointment selectedItem) {
         selectedAppointment = selectedItem;
     }
 
+    /**
+     * Populates the text fields, combo boxes, and date pickers with the selected appointment data.
+     *
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         for (String type : appointmentTypes) {
@@ -241,7 +249,6 @@ public class ModAppointmentController implements Initializable {
                 exceptionArray.remove("Start date cannot be after end date.");
             }
 
-
             if(modifyAppointmentOverlap(startDateTime, selectedAppointment) || modifyAppointmentOverlap(endDateTime, selectedAppointment)) {
                 exceptionArray.add("Appointment overlaps with another appointment.");
             } else {
@@ -263,10 +270,9 @@ public class ModAppointmentController implements Initializable {
             ZonedDateTime utcEndDateTime = endDate.withZoneSameInstant(ZoneId.of("UTC"));
             String endDateFormatted = formatter.format(utcEndDateTime);
 
-            int recordsAdded = updateAppointment(titleTF.getText(), descriptionTF.getText(), locationTF.getText(), appointmentTypeCombo.getValue().toString(), startDateFormatted, endDateFormatted, customerIdCombo.getValue().getCustomerId(), Context.getUserId(), contactCombo.getValue().getContactId(), selectedAppointment.getAppointmentId());
+            updateAppointment(titleTF.getText(), descriptionTF.getText(), locationTF.getText(), appointmentTypeCombo.getValue().toString(), startDateFormatted, endDateFormatted, customerIdCombo.getValue().getCustomerId(), Context.getUserId(), contactCombo.getValue().getContactId(), selectedAppointment.getAppointmentId());
             AlertUtils.alertInformation("Appointment updated successfully", "Appointment has been updated successfully.");
             Navigate.changeScene(actionEvent, "home");
         }
     }
 }
-E

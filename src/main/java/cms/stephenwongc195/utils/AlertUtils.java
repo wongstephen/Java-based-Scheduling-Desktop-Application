@@ -9,6 +9,11 @@ import java.util.Optional;
  * This class is used to display alerts to the user.
  */
 public class AlertUtils {
+    /**
+     * Displays an error alert to the user depending on parameters
+     * @param title
+     * @param message
+     */
     public static void alertError(String title, String message) {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
         alert.setTitle(title);
@@ -16,6 +21,11 @@ public class AlertUtils {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    /**
+     * Displays an info alert to the user depending on parameters
+     * @param title
+     * @param message
+     */
     public static void alertInformation(String title, String message) {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -23,7 +33,11 @@ public class AlertUtils {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
+    /**
+     * Displays an confirmation alert to the user depending on parameters
+     * @param title
+     * @param message
+     */
     public static Optional<ButtonType> alertConfirmation(String title, String message) {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
