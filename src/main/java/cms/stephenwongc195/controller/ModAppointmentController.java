@@ -20,6 +20,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -31,6 +32,8 @@ import static cms.stephenwongc195.dao.ContactDao.getAllContacts;
 import static cms.stephenwongc195.dao.CustomerDao.getAllCustomers;
 import static cms.stephenwongc195.dao.Query.insertAppointment;
 import static cms.stephenwongc195.dao.Query.updateAppointment;
+import static cms.stephenwongc195.utils.TimeUtil.hasAppointmentOverlap;
+import static cms.stephenwongc195.utils.TimeUtil.modifyAppointmentOverlap;
 
 public class ModAppointmentController implements Initializable {
     @FXML
@@ -159,124 +162,111 @@ public class ModAppointmentController implements Initializable {
         }
     }
 
+
+    /**
+     * Validates the comboboxes values and adds to exception array if null.
+     * @param comboBox on the add appointment screen
+     * @param type label of combobox
+     * @param exceptionArray array of exceptions
+     */
+    public void validateCombo(ComboBox comboBox, String type, ArrayList<String> exceptionArray) {
+        if (comboBox.getValue() == null) {
+            exceptionArray.add(type + " cannot be empty.");
+        } else {
+            exceptionArray.remove(type + " cannot be empty.");
+        }
+    }
+
+    /**
+     * Validates the textField values and adds to exception array if null.
+     * @param textField on the add appointment screen
+     * @param type label of combobox
+     * @param exceptionArray array of exceptions
+     */
+    public void validateTF(TextField textField, String type, ArrayList<String> exceptionArray) {
+        if (textField.getText().isEmpty()) {
+            exceptionArray.add(type + " cannot be empty.");
+        } else {
+            exceptionArray.remove(type + " cannot be empty.");
+        }
+    }
+
+    /**
+     * Validates the date values and adds to exception array if null.
+     * @param datePicker on the add appointment screen
+     * @param type label of combobox
+     * @param exceptionArray array of exceptions
+     */
+    public void validateDate(DatePicker datePicker, String type, ArrayList<String> exceptionArray) {
+        if (datePicker.getValue() == null) {
+            exceptionArray.add(type + " cannot be empty.");
+        } else {
+            exceptionArray.remove(type + " cannot be empty.");
+        }
+    }
+
+    /**
+     * Handles the save button. Validates the data and saves the appointment to the database.
+     * @param actionEvent Save button click on home screen
+     */
     public void handleSaveBtn(ActionEvent actionEvent) {
+        ArrayList<String> exceptionArray = new ArrayList<>();
 
-        List<String> exceptionArray = new ArrayList<String>();
-        boolean hasException;
+        validateCombo(customerIdCombo, "Customer ID", exceptionArray);
+        validateCombo(contactCombo, "Contact", exceptionArray);
+        validateTF(titleTF, "Title", exceptionArray);
+        validateTF(descriptionTF, "Description", exceptionArray);
+        validateTF(locationTF, "Location", exceptionArray);
+        validateCombo(appointmentTypeCombo, "Type", exceptionArray);
+        validateTF(locationTF, "Location", exceptionArray);
 
-        if (customerIdCombo.getValue() == null) {
-            hasException = true;
-            exceptionArray.add("User ID cannot be empty.");
-        } else {
-            hasException = false;
+        // Time validation
+        validateDate(startDateDp, "Start date", exceptionArray);
+        validateCombo(startHourCombo, "Start hour", exceptionArray);
+        validateCombo(startMinCombo, "Start minute", exceptionArray);
+        validateCombo(startSecondCombo, "Start second", exceptionArray);
+        validateDate(endDateDp, "End date", exceptionArray);
+        validateCombo(endHourCombo, "End hour", exceptionArray);
+        validateCombo(endMinuteCombo, "End minute", exceptionArray);
+        validateCombo(endSecondCombo, "End second", exceptionArray);
+
+        // If all fields are filled out, check if the start date is before the end date and if the appointment conflicts with another appointment.
+        if (startDateDp.getValue() != null && startHourCombo.getValue() != null && startMinCombo.getValue() != null && startSecondCombo.getValue() != null && endDateDp.getValue() != null && endHourCombo.getValue() != null && endMinuteCombo.getValue() != null && endSecondCombo.getValue() != null) {
+
+            LocalDateTime startDateTime = LocalDateTime.of(startDateDp.getValue().getYear(), startDateDp.getValue().getMonthValue(), startDateDp.getValue().getDayOfMonth(), Integer.parseInt(startHourCombo.getValue().toString()), Integer.parseInt(startMinCombo.getValue().toString()), Integer.parseInt(startSecondCombo.getValue().toString()));
+            LocalDateTime endDateTime = LocalDateTime.of(endDateDp.getValue().getYear(), endDateDp.getValue().getMonthValue(), endDateDp.getValue().getDayOfMonth(), Integer.parseInt(endHourCombo.getValue().toString()), Integer.parseInt(endMinuteCombo.getValue().toString()), Integer.parseInt(endSecondCombo.getValue().toString()));
+            if(startDateTime.isAfter(endDateTime)) {
+                exceptionArray.add("Start date cannot be after end date.");
+            } else {
+                exceptionArray.remove("Start date cannot be after end date.");
+            }
+
+
+            if(modifyAppointmentOverlap(startDateTime, selectedAppointment) || modifyAppointmentOverlap(endDateTime, selectedAppointment)) {
+                exceptionArray.add("Appointment overlaps with another appointment.");
+            } else {
+                exceptionArray.remove("Appointment overlaps with another appointment.");
+            }
         }
 
-        if (contactCombo.getValue() == null) {
-            hasException = true;
-            exceptionArray.add("Contact cannot be empty.");
-        } else {
-            hasException = false;
-        }
-
-        if (titleTF.getText().isEmpty()) {
-            hasException = true;
-            exceptionArray.add("Title cannot be empty.");
-        } else {
-            hasException = false;
-        }
-
-        if (descriptionTF.getText().isEmpty()) {
-            hasException = true;
-            exceptionArray.add("Description cannot be empty.");
-        } else {
-            hasException = false;
-        }
-
-        if (appointmentTypeCombo.getValue() == null) {
-            hasException = true;
-            exceptionArray.add("Type cannot be empty.");
-        } else {
-            hasException = false;
-        }
-
-        if(startDateDp.getValue() == null) {
-            hasException = true;
-            exceptionArray.add("Start date cannot be empty.");
-        } else {
-            hasException = false;
-        }
-
-        if (startHourCombo.getValue() == null) {
-            hasException = true;
-            exceptionArray.add("Start hour cannot be empty.");
-        } else {
-            hasException = false;
-        }
-
-        if (startMinCombo.getValue() == null) {
-            hasException = true;
-            exceptionArray.add("Start minute cannot be empty.");
-        } else {
-            hasException = false;
-        }
-
-        if(endDateDp.getValue() == null) {
-            hasException = true;
-            exceptionArray.add("End date cannot be empty.");
-        } else {
-            hasException = false;
-        }
-
-        if (endSecondCombo.getValue() == null) {
-            hasException = true;
-            exceptionArray.add("Start second cannot be empty.");
-        } else {
-            hasException = false;
-        }
-
-        if (endHourCombo.getValue() == null) {
-            hasException = true;
-            exceptionArray.add("End hour cannot be empty.");
-        } else {
-            hasException = false;
-        }
-
-        if (endMinuteCombo.getValue() == null) {
-            hasException = true;
-            exceptionArray.add("End minute cannot be empty.");
-        } else {
-            hasException = false;
-        }
-
-        if (endSecondCombo.getValue() == null) {
-            hasException = true;
-            exceptionArray.add("End second cannot be empty.");
-        } else {
-            hasException = false;
-        }
-
-        if (hasException) {
+        if (exceptionArray.size() > 0) {
             String exceptionString = String.join("\n", exceptionArray);
             AlertUtils.alertError("Please fill out all required fields before submitting the form.", exceptionString);
         } else {
             ZonedDateTime startDate = ZonedDateTime.of(startDateDp.getValue().getYear(), startDateDp.getValue().getMonthValue(), startDateDp.getValue().getDayOfMonth(), Integer.parseInt(startHourCombo.getValue().toString()), Integer.parseInt(startMinCombo.getValue().toString()),Integer.parseInt(startSecondCombo.getValue().toString()), 0, ZoneId.systemDefault());
             ZonedDateTime endDate = ZonedDateTime.of(endDateDp.getValue().getYear(), endDateDp.getValue().getMonthValue(), endDateDp.getValue().getDayOfMonth(), Integer.parseInt(endHourCombo.getValue().toString()), Integer.parseInt(endMinuteCombo.getValue().toString()),Integer.parseInt(endSecondCombo.getValue().toString()), 0, ZoneId.systemDefault());
-
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
             ZonedDateTime utcStartDateTime = startDate.withZoneSameInstant(ZoneId.of("UTC"));
             String startDateFormatted = formatter.format(utcStartDateTime);
-            System.out.println(startDateFormatted);
 
             ZonedDateTime utcEndDateTime = endDate.withZoneSameInstant(ZoneId.of("UTC"));
             String endDateFormatted = formatter.format(utcEndDateTime);
-            System.out.println(endDateFormatted);
 
             int recordsAdded = updateAppointment(titleTF.getText(), descriptionTF.getText(), locationTF.getText(), appointmentTypeCombo.getValue().toString(), startDateFormatted, endDateFormatted, customerIdCombo.getValue().getCustomerId(), Context.getUserId(), contactCombo.getValue().getContactId(), selectedAppointment.getAppointmentId());
-            System.out.println("Records added: " + recordsAdded);
-            AlertUtils.alertInformation("Appointment added successfully", "Appointment has been added successfully.");
+            AlertUtils.alertInformation("Appointment updated successfully", "Appointment has been updated successfully.");
             Navigate.changeScene(actionEvent, "home");
-
         }
     }
 }
+E

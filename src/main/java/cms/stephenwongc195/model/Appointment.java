@@ -119,4 +119,9 @@ public class Appointment {
     public void setContactId(int contactId) {
         this.contactId = contactId;
     }
+
+    @Override
+    public String toString() {
+        return appointmentTitle + " " + appointmentId;
+    }
 }
