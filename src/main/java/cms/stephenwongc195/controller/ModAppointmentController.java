@@ -35,6 +35,9 @@ import static cms.stephenwongc195.dao.Query.updateAppointment;
 import static cms.stephenwongc195.utils.TimeUtil.hasAppointmentOverlap;
 import static cms.stephenwongc195.utils.TimeUtil.modifyAppointmentOverlap;
 
+/**
+ * ModAppointmentController class is used to modify an appointment.
+ */
 public class ModAppointmentController implements Initializable {
     @FXML
     private DatePicker startDateDp;
@@ -116,7 +119,7 @@ public class ModAppointmentController implements Initializable {
      * Populates the hour combo boxes with values 8-16 EST and will be translated to local time.
      * */
     private void populateHourCombo() {
-        for (int i = 8; i < 16; i++) {
+        for (int i = 8; i <= 22; i++) {
             startHourCombo.getItems().add(TimeUtil.convertEstToLocal(i).getHour());
             endHourCombo.getItems().add(TimeUtil.convertEstToLocal(i).getHour());
         }
@@ -156,6 +159,10 @@ public class ModAppointmentController implements Initializable {
         contactCombo.setItems(getAllContacts().sorted());
     }
 
+    /**
+     * Checks if hour combo box is set to 16 and disables the minute and second combo boxes.
+     * @param actionEvent
+     */
     public void handleEndHourCombo(ActionEvent actionEvent) {
         int shclen = endHourCombo.getItems().size()-1;
         int endComboValue = (int)endHourCombo.getValue();

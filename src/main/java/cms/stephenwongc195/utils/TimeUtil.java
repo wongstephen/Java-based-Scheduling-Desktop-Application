@@ -34,7 +34,7 @@ public class TimeUtil {
 
     /**
      * Checks if a given time overlaps with any appointments.
-     * Lambda expression used to iterate through all appointments.
+     * Lambda expression used to iterate through all appointments and check if the given time overlaps.
      *
      * @param checkDateTime
      * @return boolean

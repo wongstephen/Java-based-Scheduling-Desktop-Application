@@ -20,6 +20,9 @@ import java.util.ResourceBundle;
 
 import static cms.stephenwongc195.dao.LocationDao.*;
 
+/**
+ * AddCustomerController class is used to add a customer.
+ */
 public class AddCustomerController implements Initializable {
     @FXML
     private TextField customerNameTF;
@@ -34,6 +37,9 @@ public class AddCustomerController implements Initializable {
     @FXML
     private ComboBox<Division> divisionCombo;
 
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         divisionCombo.disableProperty().bind(countryCombo.valueProperty().isNull()); //disables division combo box until country is selected

@@ -27,6 +27,9 @@ import static cms.stephenwongc195.dao.CustomerDao.getAllCustomers;
 import static cms.stephenwongc195.dao.Query.insertAppointment;
 import static cms.stephenwongc195.utils.TimeUtil.hasAppointmentOverlap;
 
+/**
+ * AddAppointmentController class is used to handle adding an appointment.
+ */
 public class AddAppointmentController implements Initializable {
     public ComboBox appointmentTypeCombo;
     public ComboBox startHourCombo;
@@ -51,6 +54,9 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private TextField locationTF;
 
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         for (String type : appointmentTypes) {
@@ -69,7 +75,7 @@ public class AddAppointmentController implements Initializable {
      * Populates the hour combo boxes with values 8-16 EST and will be translated to local time.
      */
     private void populateHourCombo() {
-        for (int i = 8; i < 16; i++) {
+        for (int i = 8; i <= 22; i++) {
             startHourCombo.getItems().add(TimeUtil.convertEstToLocal(i).getHour());
             endHourCombo.getItems().add(TimeUtil.convertEstToLocal(i).getHour());
         }
@@ -142,7 +148,7 @@ public class AddAppointmentController implements Initializable {
     /**
      * Validates the textField values and adds to exception array if null.
      * @param textField on the add appointment screen
-     * @param type label of combobox
+     * @param type label of combo-box
      * @param exceptionArray array of exceptions
      */
     public void validateTF(TextField textField, String type, ArrayList<String> exceptionArray) {
@@ -224,7 +230,6 @@ public class AddAppointmentController implements Initializable {
             String endDateFormatted = formatter.format(utcEndDateTime);
 
             int recordsAdded = insertAppointment(titleTF.getText(), descriptionTF.getText(), locationTF.getText(), appointmentTypeCombo.getValue().toString(), startDateFormatted, endDateFormatted, customerIdCombo.getValue().getCustomerId(), Context.getUserId(), contactCombo.getValue().getContactId());
-            System.out.println("Records added: " + recordsAdded);
             AlertUtils.alertInformation("Appointment added successfully", "Appointment has been added successfully.");
             Navigate.changeScene(actionEvent, "home");
 

@@ -22,7 +22,9 @@ import java.util.ResourceBundle;
 
 import static cms.stephenwongc195.utils.AlertUtils.alertError;
 
-
+/**
+ * LoginController class is used to handle login.
+ */
 public class LoginController implements Initializable {
     public static String globalLocale = "en_US";
 
@@ -61,7 +63,9 @@ public class LoginController implements Initializable {
     private String alertFr2 = "Veuillez saisir un nom d’utilisateur et un mot de passe valides";
 
 
-
+/**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         globalLocale = Locale.getDefault().toString();

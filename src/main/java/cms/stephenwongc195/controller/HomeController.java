@@ -26,6 +26,9 @@ import static cms.stephenwongc195.dao.AppointmentDao.*;
 import static cms.stephenwongc195.dao.CustomerDao.getAllCustomers;
 import static cms.stephenwongc195.dao.CustomerDao.updateAllCustomers;
 
+/**
+ * HomeController class is used to handle the home screen.
+ */
 public class HomeController implements Initializable {
     ObservableList<Appointment> filteredAppointments = FXCollections.observableArrayList();
     @FXML
@@ -80,6 +83,10 @@ public class HomeController implements Initializable {
     @FXML
     private Label homeZoneIdLabel;
 
+    /**
+     * On load, populates the customer table with all customers from the DB
+     * Also populates appointment table with all appointment data
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (globalLocale.contains("fr"))
@@ -230,6 +237,11 @@ public class HomeController implements Initializable {
         Navigate.changeScene(actionEvent, "addAppointment");
     }
 
+    /**
+     * Handles the modify appointment button click event and navigates to modify appointment screen. If no appointment is selected, an error is thrown.
+     *
+     * @param actionEvent
+     */
     @FXML
     private void handleModifyAppointmentBtn (ActionEvent actionEvent) throws IOException {
         ModAppointmentController.setSelectedAppointment((Appointment) appointmentTable.getSelectionModel().getSelectedItem());

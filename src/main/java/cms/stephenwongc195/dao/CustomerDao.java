@@ -23,6 +23,11 @@ public class CustomerDao {
         allCustomers.add(customer);
     }
 
+    /**
+     * This method returns a customer based on the customer id
+     * @param id
+     * @return customer
+     */
     public static Customer getCustomerById(int id) {
         for (Customer customer : allCustomers) {
             if (customer.getCustomerId() == id) {
@@ -32,14 +37,25 @@ public class CustomerDao {
         return null;
     }
 
+    /**
+     * This method returns all customers
+     * @return allCustomers List
+     */
     public static ObservableList<Customer> getAllCustomers() {
         return allCustomers;
     }
 
+    /**
+     * This method deletes a customer from the allCustomers ObservableList
+     * @param customer
+     */
     public static void deleteCustomer(Customer customer) {
         allCustomers.remove(customer);
     }
 
+    /**
+     * This method updates the allCustomers ObservableList
+     */
     public static void updateAllCustomers() {
         allCustomers.clear();
         try {
@@ -59,6 +75,11 @@ public class CustomerDao {
             e.printStackTrace();
         }
     }
+
+
+    /**
+     * This method updates the allCustomers ObservableList on load
+     */
     static {
         updateAllCustomers();
     }

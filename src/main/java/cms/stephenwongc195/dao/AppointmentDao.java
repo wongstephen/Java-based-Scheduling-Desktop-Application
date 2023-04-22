@@ -8,11 +8,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
+/**
+ * AppointmentDao class is used to add, delete, and get all appointments.
+ */
 public class AppointmentDao {
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> currentWeekAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> currentMonthAppointments = FXCollections.observableArrayList();
 
+    /**
+     * Gets all appointments
+     *
+     * @return all appointments
+     */
     public static ObservableList<Appointment> getCurrentWeekAppointments(){
         LocalDateTime now = LocalDateTime.now();
         int currentYear = now.getYear();
@@ -28,6 +36,11 @@ public class AppointmentDao {
         return currentWeekAppointments;
     }
 
+    /**
+     * Gets current month appointments
+     *
+     * @return current month appointments
+     */
     public static ObservableList<Appointment> getCurrentMonthAppointments(){
         LocalDateTime now = LocalDateTime.now();
         int currentYear = now.getYear();
@@ -41,18 +54,36 @@ public class AppointmentDao {
         return currentMonthAppointments;
     }
 
+    /**
+     * Adds appointment
+     *
+     * @param appointment - appointment to be added
+     */
     public static void addAppointment(Appointment appointment) {
         allAppointments.add(appointment);
     }
 
+    /**
+     * Gets all appointments
+     *
+     * @return all appointments
+     */
     public static ObservableList<Appointment> getAllAppointments() {
         return allAppointments;
     }
 
+    /**
+     * Deletes appointment
+     *
+     * @param appointment - appointment to be deleted
+     */
     public static void deleteAppointment(Appointment appointment) {
         allAppointments.remove(appointment);
     }
 
+    /**
+     * Updates all appointments
+     */
     public static void updateAllAppointments() {
         allAppointments.clear();
         try {
@@ -78,6 +109,9 @@ public class AppointmentDao {
     }
 
 
+    /**
+     * Updates and populates appointments on load
+     */
     static {
         updateAllAppointments(); // populate appointments
     }

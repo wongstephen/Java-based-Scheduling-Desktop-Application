@@ -21,6 +21,9 @@ import java.util.ResourceBundle;
 
 import static cms.stephenwongc195.dao.LocationDao.*;
 
+/**
+ * ModCustomerController class is used to modify a customer.
+ */
 public class ModCustomerController implements Initializable {
     public static Customer selectedCustomer = null;
     public static void setSelectedCustomer(Customer customer) {
@@ -42,6 +45,9 @@ public class ModCustomerController implements Initializable {
     @FXML
     private ComboBox<Division> divisionCombo;
 
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         divisionCombo.disableProperty().bind(countryCombo.valueProperty().isNull()); //disables division combo box until country is selected
@@ -49,6 +55,9 @@ public class ModCustomerController implements Initializable {
         setCustomerData();
     }
 
+    /**
+     * Sets customer data to text fields
+     */
     private void setCustomerData() {
         customerIdTF.setText(String.valueOf(selectedCustomer.getCustomerId()));
         customerNameTF.setText(selectedCustomer.getCustomerName());
