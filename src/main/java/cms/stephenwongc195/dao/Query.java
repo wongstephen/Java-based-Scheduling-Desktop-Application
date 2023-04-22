@@ -100,6 +100,22 @@ public class Query {
         return 0;
     }
 
+    public static int deleteAppointment (int appointmentId) {
+        try {
+            JDBC.openConnection();
+            System.out.println("Deleteing apppointment...");
+            String sql = "DELETE FROM appointments WHERE Appointment_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, appointmentId);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBC.closeConnection();
+        }
+        return 0;
+    }
+
     public static boolean associatedAppointmentsByCustomer(int customerId) {
         try {
             JDBC.openConnection();
@@ -114,5 +130,53 @@ public class Query {
             JDBC.closeConnection();
         }
         return false;
+    }
+
+    public static int insertAppointment(String title, String description, String location, String type, String start, String end, int customerId, int userId, int contactId) {
+        try {
+            JDBC.openConnection();
+            String sql = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, NOW(), ?, ?, ?, ?)";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, title);
+            ps.setString(2, description);
+            ps.setString(3, location);
+            ps.setString(4, type);
+            ps.setString(5, start);
+            ps.setString(6, end);
+            ps.setString(7, Context.getUserName());
+            ps.setString(8, Context.getUserName());
+            ps.setInt(9, customerId);
+            ps.setInt(10, userId);
+            ps.setInt(11, contactId);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBC.closeConnection();
+        }
+        return 0;
+    }public static int updateAppointment(String title, String description, String location, String type, String start, String end, int customerId, int userId, int contactId, int appointmentId) {
+        try {
+            JDBC.openConnection();
+            String sql = " UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Last_Update = NOW(), Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ?  WHERE appointment_id = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setString(1, title);
+            ps.setString(2, description);
+            ps.setString(3, location);
+            ps.setString(4, type);
+            ps.setString(5, start);
+            ps.setString(6, end);
+            ps.setString(7, Context.getUserName());
+            ps.setInt(8, customerId);
+            ps.setInt(9, userId);
+            ps.setInt(10, contactId);
+            ps.setInt(11, appointmentId);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBC.closeConnection();
+        }
+        return 0;
     }
 }

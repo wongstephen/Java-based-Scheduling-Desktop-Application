@@ -95,6 +95,7 @@ public class HomeController implements Initializable {
      * On load, populates the customer table with all appointments from the DB
      */
     private void setAppointmentTable() {
+        updateAllAppointments(); // Update all appointments
         appointmentTable.setItems(getAllAppointments());
         appointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         appointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
@@ -152,11 +153,21 @@ public class HomeController implements Initializable {
         appointmentTable.setItems(getAllAppointments());
     }
 
+    /**
+     * Handles the add customer button click event and navigates to the add customer screen
+     *
+     * @param actionEvent
+     * */
     @FXML
     private void handleAddCustomerBtn(ActionEvent actionEvent) throws IOException {
         Navigate.changeScene(actionEvent, "addCustomer");
     }
 
+    /**
+     * Handles the update customer button click event and updates the selected customer in the DB. If no customer is selected, an error is thrown.
+     *
+     * @param actionEvent
+     */
     @FXML
     private void handleUpdateCustomerBtn(ActionEvent actionEvent) {
         ModCustomerController.setSelectedCustomer((Customer) customerTable.getSelectionModel().getSelectedItem());
@@ -189,12 +200,43 @@ public class HomeController implements Initializable {
         } else {
             AlertUtils.alertError("No customer selected", "Please select a customer to delete");
         }
-
-
     }
 
+    /**
+     * Handles delete appointment click event. When clicked, the selected appointment is deleted from the DB.
+     * @param actionEvent
+     */
+    @FXML
+    private void handleDeleteAppointment (ActionEvent actionEvent) {
+        Appointment selectedAppointment = (Appointment) appointmentTable.getSelectionModel().getSelectedItem();
+        if (selectedAppointment != null) {
+            Optional<ButtonType> result = AlertUtils.alertConfirmation("Delete Appointment", "Are you sure you want to delete this appointment?");
+            if (result.get() == ButtonType.OK) {
+                Query.deleteAppointment(selectedAppointment.getAppointmentId());
+                setAppointmentTable();
+            }
+        } else {
+            AlertUtils.alertError("No customer selected", "Please select a customer to delete");
+        }
+    }
+
+    /**
+     * Handles the add appointment button click event and navigates to add appointment screen.
+     *
+     * @param actionEvent
+     */
     @FXML
     private void handleAddAppointmentBtn(ActionEvent actionEvent) throws IOException {
         Navigate.changeScene(actionEvent, "addAppointment");
+    }
+
+    @FXML
+    private void handleModifyAppointmentBtn (ActionEvent actionEvent) throws IOException {
+        ModAppointmentController.setSelectedAppointment((Appointment) appointmentTable.getSelectionModel().getSelectedItem());
+        if (ModAppointmentController.selectedAppointment != null) {
+            Navigate.changeScene(actionEvent, "modAppointment");
+        } else {
+            AlertUtils.alertError("No appointment selected", "Please select an appointment to modify");
+        }
     }
 }

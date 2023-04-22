@@ -64,8 +64,8 @@
                         <HBox layoutX="277.0" layoutY="523.0" spacing="5.0">
                            <children>
                               <Button mnemonicParsing="false" onAction="#handleAddAppointmentBtn" prefHeight="33.0" prefWidth="145.0" style="-fx-background-color: #008fd5; -fx-text-fill: white; -fx-font-weight: bold;" text="Add Appointment" textFill="WHITE" />
-                              <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" style="-fx-background-color: #008fd5; -fx-text-fill: white; -fx-font-weight: bold;" text="Update Appointment" textFill="WHITE" />
-                              <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="145.0" style="-fx-background-color: #008fd5; -fx-text-fill: white; -fx-font-weight: bold;" text="Delete Appointment" textFill="WHITE" />
+                              <Button mnemonicParsing="false" onAction="#handleModifyAppointmentBtn" prefHeight="33.0" prefWidth="145.0" style="-fx-background-color: #008fd5; -fx-text-fill: white; -fx-font-weight: bold;" text="Update Appointment" textFill="WHITE" />
+                              <Button mnemonicParsing="false" onAction="#handleDeleteAppointment" prefHeight="33.0" prefWidth="145.0" style="-fx-background-color: #008fd5; -fx-text-fill: white; -fx-font-weight: bold;" text="Delete Appointment" textFill="WHITE" />
                            </children>
                         </HBox>
                             </children>

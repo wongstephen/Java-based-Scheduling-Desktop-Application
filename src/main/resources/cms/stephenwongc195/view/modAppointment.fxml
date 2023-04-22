@@ -13,10 +13,10 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cms.stephenwongc195.controller.AddAppointmentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cms.stephenwongc195.controller.ModAppointmentController">
     <children>
         <Rectangle arcHeight="15.0" arcWidth="15.0" fill="#1f93ff00" height="720.0" layoutX="192.0" layoutY="32.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" width="640.0" />
-        <Label layoutX="270.0" layoutY="77.0" text="Add Appointment" textAlignment="CENTER" textFill="WHITE">
+        <Label layoutX="270.0" layoutY="77.0" text="Modify Appointment" textAlignment="CENTER" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="36.0" />
             </font>
@@ -25,7 +25,7 @@
             <children>
                 <Group>
                     <children>
-                        <TextField disable="true" editable="false" layoutX="126.0" promptText="Disabled - Auto Generated" />
+                        <TextField fx:id="appointmentIdTF" disable="true" editable="false" layoutX="126.0" promptText="Disabled - Auto Generated" />
                         <Label layoutY="5.0" text="Appointment ID" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="12.0" />

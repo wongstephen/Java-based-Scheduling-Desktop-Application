@@ -24,6 +24,14 @@ public class ContactDao {
         allContacts.remove(contact);
     }
 
+    public static Contact getContactById(int id) {
+        for (Contact contact : allContacts) {
+            if (contact.getContactId() == id) {
+                return contact;
+            }
+        }
+        return null;
+    }
     public static void updateAllContacts() {
         allContacts.clear();
         try {

@@ -16,6 +16,15 @@ public class CustomerDao {
         allCustomers.add(customer);
     }
 
+    public static Customer getCustomerById(int id) {
+        for (Customer customer : allCustomers) {
+            if (customer.getCustomerId() == id) {
+                return customer;
+            }
+        }
+        return null;
+    }
+
     public static ObservableList<Customer> getAllCustomers() {
         return allCustomers;
     }

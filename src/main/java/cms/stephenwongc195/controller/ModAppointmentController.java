@@ -1,12 +1,16 @@
 package cms.stephenwongc195.controller;
 
-import cms.stephenwongc195.dao.Query;
+import cms.stephenwongc195.dao.ContactDao;
+import cms.stephenwongc195.dao.CustomerDao;
+import cms.stephenwongc195.model.Appointment;
 import cms.stephenwongc195.model.Contact;
 import cms.stephenwongc195.model.Customer;
 import cms.stephenwongc195.utils.AlertUtils;
 import cms.stephenwongc195.utils.Context;
 import cms.stephenwongc195.utils.Navigate;
 import cms.stephenwongc195.utils.TimeUtil;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,18 +20,19 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.*;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import static cms.stephenwongc195.dao.ContactDao.getAllContacts;
 import static cms.stephenwongc195.dao.CustomerDao.getAllCustomers;
 import static cms.stephenwongc195.dao.Query.insertAppointment;
+import static cms.stephenwongc195.dao.Query.updateAppointment;
 
-public class AddAppointmentController implements Initializable {
+public class ModAppointmentController implements Initializable {
     @FXML
     private DatePicker startDateDp;
     @FXML
@@ -40,6 +45,8 @@ public class AddAppointmentController implements Initializable {
     private TextField titleTF;
     @FXML
     private TextField locationTF;
+    @FXML
+    private TextField appointmentIdTF;
     public ComboBox appointmentTypeCombo;
     public ComboBox startHourCombo;
     public ComboBox startMinCombo;
@@ -49,7 +56,13 @@ public class AddAppointmentController implements Initializable {
     public ComboBox endSecondCombo;
     public ComboBox<Customer> customerIdCombo;
     public ComboBox<Contact> contactCombo;
+
+    public static Appointment selectedAppointment;
     String[] appointmentTypes = {"Planning", "Debrief", "Consultation", "Follow-up",  "Support", "Training", "Meeting", "Presentation", "Interview", "Feedback", "Other"};
+
+    public static void setSelectedAppointment(Appointment selectedItem) {
+        selectedAppointment = selectedItem;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -62,8 +75,32 @@ public class AddAppointmentController implements Initializable {
         populateCustomerCombo();
         populateContactCombo();
         userIdTF.setText(String.valueOf(Context.getUserId()));
-
+        setAppointmentData();
     }
+
+    /**
+     * Set the selected appointment data to text fields
+     *
+     */
+    public void setAppointmentData() {
+        titleTF.setText(selectedAppointment.getAppointmentTitle());
+        descriptionTF.setText(selectedAppointment.getAppointmentDescription());
+        locationTF.setText(selectedAppointment.getAppointmentLocation());
+        appointmentTypeCombo.setValue(selectedAppointment.getAppointmentType());
+        startDateDp.setValue(selectedAppointment.getAppointmentStart().toLocalDate());
+        endDateDp.setValue(selectedAppointment.getAppointmentEnd().toLocalDate());
+        startHourCombo.setValue(selectedAppointment.getAppointmentStart().getHour());
+        startMinCombo.setValue(selectedAppointment.getAppointmentStart().getMinute());
+        startSecondCombo.setValue(selectedAppointment.getAppointmentStart().getSecond());
+        endHourCombo.setValue(selectedAppointment.getAppointmentEnd().getHour());
+        endMinuteCombo.setValue(selectedAppointment.getAppointmentEnd().getMinute());
+        endSecondCombo.setValue(selectedAppointment.getAppointmentEnd().getSecond());
+        customerIdCombo.setValue(CustomerDao.getCustomerById(selectedAppointment.getCustomerId()));
+        contactCombo.setValue(ContactDao.getContactById(selectedAppointment.getContactId()));
+        appointmentIdTF.setText(String.valueOf(selectedAppointment.getAppointmentId()));
+    }
+
+
     /**
      * Populates the hour combo boxes with values 8-16 EST and will be translated to local time.
      * */
@@ -235,7 +272,7 @@ public class AddAppointmentController implements Initializable {
             String endDateFormatted = formatter.format(utcEndDateTime);
             System.out.println(endDateFormatted);
 
-            int recordsAdded = insertAppointment(titleTF.getText(), descriptionTF.getText(), locationTF.getText(), appointmentTypeCombo.getValue().toString(), startDateFormatted, endDateFormatted, customerIdCombo.getValue().getCustomerId(), Context.getUserId(), contactCombo.getValue().getContactId());
+            int recordsAdded = updateAppointment(titleTF.getText(), descriptionTF.getText(), locationTF.getText(), appointmentTypeCombo.getValue().toString(), startDateFormatted, endDateFormatted, customerIdCombo.getValue().getCustomerId(), Context.getUserId(), contactCombo.getValue().getContactId(), selectedAppointment.getAppointmentId());
             System.out.println("Records added: " + recordsAdded);
             AlertUtils.alertInformation("Appointment added successfully", "Appointment has been added successfully.");
             Navigate.changeScene(actionEvent, "home");

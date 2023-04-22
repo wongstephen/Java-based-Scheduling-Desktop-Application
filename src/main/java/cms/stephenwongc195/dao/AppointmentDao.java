@@ -54,6 +54,7 @@ public class AppointmentDao {
     }
 
     public static void updateAllAppointments() {
+        allAppointments.clear();
         try {
             ResultSet rs = Query.tableQuery("appointments");
             while (rs.next()) {
@@ -75,9 +76,10 @@ public class AppointmentDao {
             e.printStackTrace();
         }
     }
+
+
     static {
         updateAllAppointments(); // populate appointments
-
     }
 
 }
