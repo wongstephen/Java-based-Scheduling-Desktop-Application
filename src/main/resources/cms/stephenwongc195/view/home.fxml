@@ -102,7 +102,7 @@
                 </Tab>
             </tabs>
         </TabPane>
-      <Button layoutX="894.0" layoutY="62.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="117.0" style="-fx-background-color: white; -fx-text-fill: #008fd5; -fx-font-weight: bold;" text="Generate Report" textFill="WHITE" />
+      <Button layoutX="894.0" layoutY="62.0" mnemonicParsing="false" onAction="#handleGenerateReportBtn" prefHeight="33.0" prefWidth="117.0" style="-fx-background-color: white; -fx-text-fill: #008fd5; -fx-font-weight: bold;" text="Generate Report" textFill="WHITE" />
       <Label fx:id="welcomeUserLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="801.0" layoutY="14.0" prefHeight="17.0" prefWidth="209.0" style="-fx-text-alignment: right;" textAlignment="RIGHT" textFill="WHITE" />
       <Label fx:id="homeZoneIdLabel" layoutX="420.0" layoutY="722.0" prefHeight="17.0" prefWidth="184.0" style="-fx-text-alignment: center; -fx-text-fill: white;" text="Label" />
     </children>

@@ -7,37 +7,48 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cms.stephenwongc195.controller.HomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cms.stephenwongc195.controller.ReportController">
     <stylesheets>
         <URL value="@../main.css" />
     </stylesheets>
    <children>
-      <VBox layoutX="20.0" layoutY="28.0" prefHeight="352.0" prefWidth="406.0" spacing="10.0">
+      <VBox layoutX="43.0" layoutY="125.0" prefHeight="279.0" prefWidth="408.0" spacing="10.0">
          <children>
             <Label text="Total Customers by Month and Type " textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="Arial Black" size="18.0" />
                </font>
             </Label>
-            <ComboBox prefWidth="150.0" promptText="Month" />
-            <ComboBox prefWidth="150.0" promptText="Type" />
-            <Button mnemonicParsing="false" text="Search" />
-            <TableView prefHeight="158.0" prefWidth="335.0">
+            <HBox prefHeight="30.0" prefWidth="406.0" spacing="10.0">
+               <children>
+                  <ComboBox fx:id="monthComboBox" prefWidth="150.0" promptText="Month" />
+                  <ComboBox fx:id="typeComboBox" prefWidth="150.0" promptText="Type" />
+                  <Button fx:id="searchBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" text="Search" />
+               </children>
+            </HBox>
+            <TableView prefHeight="200.0" prefWidth="200.0">
               <columns>
                 <TableColumn prefWidth="75.0" text="Month" />
                 <TableColumn prefWidth="75.0" text="Customers" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
          </children>
       </VBox>
-      <VBox layoutX="14.0" layoutY="393.0" prefHeight="361.0" prefWidth="793.0">
+      <VBox layoutX="43.0" layoutY="416.0" prefHeight="332.0" prefWidth="938.0" spacing="10.0">
          <children>
-            <Label text="Schedule by Contact" />
-            <ComboBox prefWidth="150.0" promptText="Contact" />
-            <TableView prefHeight="200.0" prefWidth="200.0">
+            <Label text="Schedule by Contact" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="18.0" />
+               </font></Label>
+            <ComboBox fx:id="contactBtn" prefWidth="150.0" promptText="Contact" />
+            <TableView prefHeight="257.0" prefWidth="942.0">
               <columns>
                 <TableColumn prefWidth="75.0" text="Appointment ID" />
                 <TableColumn prefWidth="75.0" text="Title" />
@@ -47,16 +58,28 @@
                   <TableColumn prefWidth="75.0" text="End" />
                   <TableColumn prefWidth="75.0" text="Customer Id" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
          </children>
       </VBox>
-      <VBox layoutX="556.0" layoutY="86.0" prefHeight="200.0" prefWidth="100.0">
+      <VBox layoutX="461.0" layoutY="125.0" prefHeight="279.0" prefWidth="513.0" spacing="10.0">
          <children>
-            <Label text="Somethine ELse">
+            <Label text="Total Appointments by Customer" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="Arial Black" size="18.0" />
                </font>
             </Label>
+            <TableView prefHeight="266.0" prefWidth="513.0">
+              <columns>
+                <TableColumn prefWidth="201.0" text="Customer" />
+                <TableColumn prefWidth="203.0" text="Appointment" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
          </children>
       </VBox>
       <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="975.0" layoutY="21.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCancel" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: white; -fx-background-radius: 1000;" text="X" textFill="#008fd5">
@@ -64,5 +87,10 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
+      <Label layoutX="44.0" layoutY="21.0" prefHeight="53.0" prefWidth="391.0" style="-fx-text-alignment: center;" text="Generate Report" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

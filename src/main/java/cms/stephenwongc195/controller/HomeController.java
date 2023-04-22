@@ -251,4 +251,8 @@ public class HomeController implements Initializable {
             AlertUtils.alertError("No appointment selected", "Please select an appointment to modify");
         }
     }
+
+    public void handleGenerateReportBtn(ActionEvent actionEvent) {
+        Navigate.changeScene(actionEvent, "report");
+    }
 }

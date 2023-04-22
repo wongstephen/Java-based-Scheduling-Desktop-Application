@@ -240,4 +240,20 @@ public class Query {
         }
         return 0;
     }
+
+    /**
+     * This method querys the db for customers by month/year
+     */
+    public static ResultSet queryTypeCountByMonth() {
+        ResultSet rs = null;
+        try {
+            JDBC.openConnection();
+            String sql = "SELECT DATE_FORMAT(start, '%Y-%m') AS month, type, COUNT(*) AS num_appointments FROM appointments GROUP BY month, type";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+             rs = ps.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rs;
+    }
 }
