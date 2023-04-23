@@ -256,4 +256,17 @@ public class Query {
         }
         return rs;
     }
+
+    public static ResultSet appointmentsByCustomer() {
+        ResultSet rs = null;
+        try {
+            JDBC.openConnection();
+            String sql = "SELECT customers.Customer_Name, count(*) FROM appointments JOIN customers ON customers.Customer_ID = appointments.Customer_ID WHERE appointments.start > CURDATE() group by customers.customer_name;";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            rs = ps.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace() ;
+        }
+        return rs;
+    }
 }
