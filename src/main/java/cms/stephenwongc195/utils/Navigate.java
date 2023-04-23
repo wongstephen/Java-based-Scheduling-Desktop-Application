@@ -1,6 +1,6 @@
 package cms.stephenwongc195.utils;
 
-import cms.stephenwongc195.App;
+import cms.stephenwongc195.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,7 +25,7 @@ public abstract class Navigate {
     public static void changeScene(ActionEvent actionEvent, String location) {
         try {
             stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            scene = FXMLLoader.load(App.class.getResource("view/" + location + ".fxml"));
+            scene = FXMLLoader.load(Main.class.getResource("view/" + location + ".fxml"));
             stage.setScene(new Scene(scene));
             stage.show();
         } catch (IOException e) {
