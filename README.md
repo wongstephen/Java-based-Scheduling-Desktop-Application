@@ -98,9 +98,18 @@ Your company acquires Country and First-Level-Division data from a third party t
 * The application will open in a new window.
 * Login with username test and password test.
 
+## SCREENSHOTS
 
 ![Screenshot 2023-04-23 at 1.30.24 PM.png](screenshots%2FScreenshot%202023-04-23%20at%201.30.24%20PM.png)![Screenshot 2023-04-23 at 1.35.33 PM.png](screenshots%2FScreenshot%202023-04-23%20at%201.35.33%20PM.png)
 ![Screenshot 2023-04-23 at 1.35.37 PM.png](screenshots%2FScreenshot%202023-04-23%20at%201.35.37%20PM.png)
 ![Screenshot 2023-04-23 at 1.35.42 PM.png](screenshots%2FScreenshot%202023-04-23%20at%201.35.42%20PM.png)
 ![Screenshot 2023-04-23 at 1.35.53 PM.png](screenshots%2FScreenshot%202023-04-23%20at%201.35.53%20PM.png)
 ![Screenshot 2023-04-23 at 1.36.01 PM.png](screenshots%2FScreenshot%202023-04-23%20at%201.36.01%20PM.png)
+
+## WIREFRAME
+
+![Wireframe - 1.jpg](Wire%20Frame%2FWireframe%20-%201.jpg)
+![Wireframe - 2.jpg](Wire%20Frame%2FWireframe%20-%202.jpg)
+![Wireframe - 3.jpg](Wire%20Frame%2FWireframe%20-%203.jpg)
+![Wireframe - 4.jpg](Wire%20Frame%2FWireframe%20-%204.jpg)
+![Wireframe - 5.jpg](Wire%20Frame%2FWireframe%20-%205.jpg)
