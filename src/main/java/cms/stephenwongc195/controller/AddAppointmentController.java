@@ -40,7 +40,7 @@ public class AddAppointmentController implements Initializable {
     public ComboBox endSecondCombo;
     public ComboBox<Customer> customerIdCombo;
     public ComboBox<Contact> contactCombo;
-    String[] appointmentTypes = {"Planning", "Debrief", "Consultation", "Follow-up", "Support", "Training", "Meeting", "Presentation", "Interview", "Feedback", "Other"};
+    String[] appointmentTypes = {"Planning Session", "De-Briefing", "Presentation", "Interview", "Feedback", "Other"};
     @FXML
     private DatePicker startDateDp;
     @FXML
@@ -67,8 +67,6 @@ public class AddAppointmentController implements Initializable {
         populateMinuteSecondCombo();
         populateCustomerCombo();
         populateContactCombo();
-        userIdTF.setText(String.valueOf(Context.getUserId()));
-
     }
 
     /**

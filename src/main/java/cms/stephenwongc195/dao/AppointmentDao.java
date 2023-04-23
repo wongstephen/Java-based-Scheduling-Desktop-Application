@@ -15,6 +15,7 @@ public class AppointmentDao {
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> currentWeekAppointments = FXCollections.observableArrayList();
     private static ObservableList<Appointment> currentMonthAppointments = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> upcoming15minAppointments = FXCollections.observableArrayList();
 
     /**
      * Gets all appointments
@@ -108,6 +109,20 @@ public class AppointmentDao {
         }
     }
 
+    /**
+     * Gets appointments in 15 minutes
+     */
+    public static ObservableList<Appointment> getUpcoming15minAppointments() {
+        upcoming15minAppointments.clear();
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime fifteenMinutesFromNow = now.plusMinutes(15);
+        getAllAppointments().forEach(appointment -> {
+            if (appointment.getAppointmentStart().isAfter(now) && appointment.getAppointmentStart().isBefore(fifteenMinutesFromNow)) {
+                upcoming15minAppointments.add(appointment);
+            }
+        });
+        return upcoming15minAppointments;
+    }
 
     /**
      * Updates and populates appointments on load

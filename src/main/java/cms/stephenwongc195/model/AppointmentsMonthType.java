@@ -1,32 +1,29 @@
 package cms.stephenwongc195.model;
 
+import java.time.LocalDateTime;
+
 public class AppointmentsMonthType {
-    String monthYear;
+    String month;
     String type;
     int count;
 
-    public AppointmentsMonthType(String monthYear, String type, int count) {
-        this.monthYear = monthYear;
+    public AppointmentsMonthType(String month, String type, int count) {
+        this.month = month;
         this.type = type;
         this.count = count;
     }
 
-    public String getMonthYear() {
-        return monthYear;
+    public String getMonth() {
+        return month;
     }
 
-    public int getYear(){
-        String[] yearMonth = monthYear.split("-");
-        return Integer.parseInt(yearMonth[0]);
+    public void setMonth(String month) {
+        this.month = month;
     }
 
-    public int getMonth(){
-        String[] yearMonth = monthYear.split("-");
-        return Integer.parseInt(yearMonth[1]);
-    }
-
-    public void setMonthYear(String monthYear) {
-        this.monthYear = monthYear;
+    public String getMonthValue() {
+        LocalDateTime month = LocalDateTime.of(2020, Integer.parseInt(this.month), 1, 0, 0);
+        return month.getMonth().toString();
     }
 
     public String getType() {
@@ -47,6 +44,6 @@ public class AppointmentsMonthType {
 
     @Override
     public String toString () {
-        return monthYear + " " + type + " " + count;
+        return month + " " + type + " " + count;
     }
 }

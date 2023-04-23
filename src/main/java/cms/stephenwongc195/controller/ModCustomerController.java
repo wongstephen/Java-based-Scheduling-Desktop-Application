@@ -52,13 +52,13 @@ public class ModCustomerController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         divisionCombo.disableProperty().bind(countryCombo.valueProperty().isNull()); //disables division combo box until country is selected
         countryCombo.setItems(allCountries);
-        setCustomerData();
+        populateForm();
     }
 
     /**
      * Sets customer data to text fields
      */
-    private void setCustomerData() {
+    private void populateForm() {
         customerIdTF.setText(String.valueOf(selectedCustomer.getCustomerId()));
         customerNameTF.setText(selectedCustomer.getCustomerName());
         addressTF.setText(selectedCustomer.getCustomerAddress());
@@ -88,8 +88,7 @@ public class ModCustomerController implements Initializable {
         ObservableList<Division> result = lookupDivisionByCountry(countryCombo.getValue().getCountryId());
         divisionCombo.setItems(result.sorted());
     }
-
-
+    
     /**
      * Saves customer to database
      *
@@ -98,45 +97,14 @@ public class ModCustomerController implements Initializable {
     @FXML
     private void onSave(ActionEvent actionEvent) throws IOException {
         List<String> exception = new ArrayList<String>();
-        Boolean hasException;
-        if (customerNameTF.getText().isBlank()) {
-            exception.add("Customer name is required");
-            hasException = true;
-        } else {
-            hasException = false;
-        }
-        if (addressTF.getText().isBlank()) {
-            exception.add("Address is required");
-            hasException = true;
-        } else {
-            hasException = false;
-        }
-        if (postalTF.getText().isBlank()) {
-            exception.add("Address is required");
-            hasException = true;
-        } else {
-            hasException = false;
-        }
-        if (phoneTF.getText().isBlank()) {
-            exception.add("Phone Number is required");
-            hasException = true;
-        } else {
-            hasException = false;
-        }
-        if (countryCombo.getValue() == null) {
-            exception.add("Country is required");
-            hasException = true;
-        } else {
-            hasException = false;
-        }
-        if (divisionCombo.getValue() == null) {
-            exception.add("Division is required");
-            hasException = true;
-        } else {
-            hasException = false;
-        }
+        if (customerNameTF.getText().isBlank()) exception.add("Customer name is required");
+        if (addressTF.getText().isBlank())  exception.add("Address is required");
+        if (postalTF.getText().isBlank()) exception.add("Postal is required");
+        if (phoneTF.getText().isBlank()) exception.add("Phone Number is required");
+        if (countryCombo.getValue() == null) exception.add("Country is required");
+        if (divisionCombo.getValue() == null) exception.add("Division is required");
 
-        if (hasException) {
+        if (exception.size() > 0) {
             String exceptionString = String.join("\n", exception);
             AlertUtils.alertError("Please fill out all required fields before submitting the form.", exceptionString);
         } else {

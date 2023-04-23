@@ -12,7 +12,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -22,7 +21,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 import static cms.stephenwongc195.dao.Query.appointmentsByCustomer;
@@ -36,9 +34,11 @@ public class ReportController  implements Initializable {
     public TableColumn chart1__monthCol;
     public TableColumn chart1__countCol;
     public TableColumn chart1__typeCol;
+
     public TableView chart2__tableView;
     public TableColumn chart2__custCol;
     public TableColumn chart2__apptCol;
+
     public ComboBox<Contact> contactCombo;
     public TableView chart3__tableView;
     public TableColumn chart3__appointmentCol;
@@ -50,6 +50,22 @@ public class ReportController  implements Initializable {
     public TableColumn chart3__custIdCol;
 
     /**
+     * Initialize report screen with data
+     *
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            populateContactCombo();
+            setChart1();
+            setChart2();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    /**
      * Cancel button handler and returns to home screen
      *
      * @param actionEvent
@@ -59,29 +75,28 @@ public class ReportController  implements Initializable {
         Navigate.changeScene(actionEvent, "home");
     }
 
-/*    public void setMonthComboBox() {
-        for (int i = 1; i <= 12; i++) {
-            LocalDateTime month = LocalDateTime.of(2021, i, 1, 0, 0);
-            monthComboBox.getItems().add(month.getMonth());
-        }
-    }*/
-
-    public void queryApptByTypeMonth() throws SQLException {
+    /**
+     * Set table view for appointments by type and month
+     */
+    public void setChart1() throws SQLException {
+        appointmentsMonthTypes.clear();
         ResultSet rs = queryTypeCountByMonth();
         while (rs.next()) {
             AppointmentsMonthType appointment = new AppointmentsMonthType(rs.getString("month"), rs.getString("type"), rs.getInt("num_appointments") );
             appointmentsMonthTypes.add(appointment);
         }
-    }
-
-    public void setApptTypeTableView () {
-        chart1__tableView.setItems(appointmentsMonthTypes);
-        chart1__monthCol.setCellValueFactory(new PropertyValueFactory<>("monthYear"));
+        chart1__tableView.getItems().clear();
+        chart1__tableView.setItems(appointmentsMonthTypes.sorted());
+        chart1__monthCol.setCellValueFactory(new PropertyValueFactory<>("monthValue"));
         chart1__typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         chart1__countCol.setCellValueFactory(new PropertyValueFactory<>("count"));
     }
 
-    public void setApptByCustomer() throws SQLException {
+    /**
+     * Set table view for appointments by customer chart2
+     */
+    public void setChart2() throws SQLException {
+        appointmentsByCustomers.clear();
         ResultSet rs = appointmentsByCustomer();
         while(rs.next()) {
             AppointmentsByCustomer appointmentByCustomer = new AppointmentsByCustomer(rs.getString("Customer_Name"), rs.getInt("count(*)"));
@@ -92,10 +107,25 @@ public class ReportController  implements Initializable {
         chart2__apptCol.setCellValueFactory(new PropertyValueFactory<>("count"));
     }
 
+    /**
+     * Populate contact combo box
+     */
     public void populateContactCombo() {
         contactCombo.setItems(ContactDao.getAllContacts());
     }
 
+    /**
+     * Handle contact combo box selection
+     *
+     * @param actionEvent
+     */
+    public void handleSelectedContactCombo(ActionEvent actionEvent) {
+        setChart3(contactCombo.getSelectionModel().getSelectedItem().getContactId());
+    }
+
+    /**
+     * Set table view for appointments by contact
+     */
     public void setChart3(int selectedContact) {
         ObservableList<Appointment> filteredByContact = AppointmentDao.getAllAppointments().filtered(appointment -> appointment.getContactId() == selectedContact);
         chart3__tableView.setItems(filteredByContact);
@@ -106,27 +136,5 @@ public class ReportController  implements Initializable {
         chart3__startCol.setCellValueFactory(new PropertyValueFactory<>("appointmentStartFormatted"));
         chart3__endCol.setCellValueFactory(new PropertyValueFactory<>("appointmentEndFormatted"));
         chart3__custIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-
-    }
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        setMonthComboBox();
-//        typeComboBox.disableProperty().bind(monthComboBox.valueProperty().isNull());
-//        searchBtn.disableProperty().bind(typeComboBox.valueProperty().isNull());
-        try {
-            queryApptByTypeMonth();
-            setApptByCustomer();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        populateContactCombo();
-        setApptTypeTableView ();
-    }
-
-    public void handleSelectedContactCombo(ActionEvent actionEvent) {
-        setChart3(contactCombo.getSelectionModel().getSelectedItem().getContactId());
     }
 }

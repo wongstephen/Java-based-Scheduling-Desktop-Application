@@ -64,7 +64,7 @@ public class ModAppointmentController implements Initializable {
     public ComboBox<Contact> contactCombo;
 
     public static Appointment selectedAppointment;
-    String[] appointmentTypes = {"Planning", "Debrief", "Consultation", "Follow-up",  "Support", "Training", "Meeting", "Presentation", "Interview", "Feedback", "Other"};
+    String[] appointmentTypes = {"Planning Session", "De-Briefing", "Presentation", "Interview", "Feedback", "Other"};
 
     /**
      * Context for selected appointment to edit.

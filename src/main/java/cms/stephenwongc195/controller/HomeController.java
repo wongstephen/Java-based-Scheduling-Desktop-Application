@@ -255,4 +255,27 @@ public class HomeController implements Initializable {
     public void handleGenerateReportBtn(ActionEvent actionEvent) {
         Navigate.changeScene(actionEvent, "report");
     }
+
+    /**
+     * Handles the exit button click event and exits the application.
+     *
+     *
+     */
+    public static void checkFor15MinAppt() {
+        if(getUpcoming15minAppointments().size()>0) {
+            AlertUtils.alertInformation("Upcoming Appointment", "You have one more more appointment(s) in the next 15 minutes");
+            getUpcoming15minAppointments().forEach(appointment -> {
+                AlertUtils.alertInformation("Upcoming Appointment", "Appointment ID " + appointment.getAppointmentId() + " at " + appointment.getAppointmentStartFormatted());
+            });
+        } else {
+            AlertUtils.alertInformation("No Upcoming Appointments", "You have no upcoming appointments in the next 15 minutes");
+        }
+    }
+
+    /**
+     * On load, checks for upcoming appointments in the next 15 minutes and alerts the user if there are any.
+     */
+    static {
+        checkFor15MinAppt();
+    }
 }
