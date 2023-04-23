@@ -9,7 +9,9 @@
    IntelliJ IDEA 2023.1 (Ultimate Edition), JDK 17.0.6, JavaFX 19.0.2.1
 
 •  directions for how to run the program
-    Run the Main class from App.Java
+    Run the Main class from Main.Java
+    Use the connecter Connector/J 8.0.33 to connect to the database
+    The mysql database must have a user sqlUser with password Passw0rd!
 
 •  a description of the additional report of your choice you ran in part A3f
     I ran the report that shows the number of future appointments by customer.
