@@ -113,3 +113,7 @@ Your company acquires Country and First-Level-Division data from a third party t
 ![Wireframe - 3.jpg](wireframe%2FWireframe%20-%203.jpg)
 ![Wireframe - 4.jpg](wireframe%2FWireframe%20-%204.jpg)
 ![Wireframe - 5.jpg](wireframe%2FWireframe%20-%205.jpg)
+
+## ENTITY RELATIONSHIP DIAGRAM
+
+![ERD.png](wireframe%2FERD.png)
