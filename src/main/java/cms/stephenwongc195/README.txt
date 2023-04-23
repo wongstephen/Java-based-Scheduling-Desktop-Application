@@ -1,6 +1,6 @@
 •  title and purpose of the application
     WGU C195 Performance Assessment - Stephen Wong
-    GUI-based scheduling desktop application connected to a DB.
+    GUI-based scheduling desktop application to manage customer appointments and data connected to a DB.
 
 •  author, contact information, student application version, and date
    Stephen Wong, swong42@wgu.edu, 1.0, 2023-04-18
@@ -9,14 +9,11 @@
    IntelliJ IDEA 2023.1 (Ultimate Edition), JDK 17.0.6, JavaFX 19.0.2.1
 
 •  directions for how to run the program
+    Run the Main class from App.Java
 
 •  a description of the additional report of your choice you ran in part A3f
+    I ran the report that shows the number of future appointments by customer.
 
 •  the MySQL Connector driver version number, including the update number (e.g., mysql-connector-java-8.1.23)
     MySQL Server 8.0.33
     Connector/J 8.0.33
-
-    MySql Login: sqlUser Password: Passw0rd!
-
-      My SQL server time should be in UTC:
-        SET GLOBAL time_zone = '+0:00';
