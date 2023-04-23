@@ -108,8 +108,8 @@ Your company acquires Country and First-Level-Division data from a third party t
 
 ## WIREFRAME
 
-![Wireframe - 1.jpg](Wire%20Frame%2FWireframe%20-%201.jpg)
-![Wireframe - 2.jpg](Wire%20Frame%2FWireframe%20-%202.jpg)
-![Wireframe - 3.jpg](Wire%20Frame%2FWireframe%20-%203.jpg)
-![Wireframe - 4.jpg](Wire%20Frame%2FWireframe%20-%204.jpg)
-![Wireframe - 5.jpg](Wire%20Frame%2FWireframe%20-%205.jpg)
+![Wireframe - 1.jpg](wireframe%2FWireframe%20-%201.jpg)
+![Wireframe - 2.jpg](wireframe%2FWireframe%20-%202.jpg)
+![Wireframe - 3.jpg](wireframe%2FWireframe%20-%203.jpg)
+![Wireframe - 4.jpg](wireframe%2FWireframe%20-%204.jpg)
+![Wireframe - 5.jpg](wireframe%2FWireframe%20-%205.jpg)
