@@ -143,6 +143,28 @@ public class Query {
     }
 
     /**
+     * THis method deletes appointment from the database.
+     * @param customerId
+     * @return
+     */
+    public static int deleteAppointmentByCustomerId (int customerId) {
+        try {
+            JDBC.openConnection();
+            System.out.println("Deleteing apppointment...");
+            String sql = "DELETE FROM appointments WHERE Customer_ID = ?";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ps.setInt(1, customerId);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JDBC.closeConnection();
+        }
+        return 0;
+    }
+
+
+    /**
      * THis method checks if there are appointments associated with the customer.
      * @param customerId
      * @return boolean if there are appointments associated with the customer

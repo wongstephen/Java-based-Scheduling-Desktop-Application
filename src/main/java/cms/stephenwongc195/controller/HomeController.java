@@ -196,13 +196,11 @@ public class HomeController implements Initializable {
         if (selectedCustomer != null) {
             Optional<ButtonType> result = AlertUtils.alertConfirmation("Delete Customer", "Are you sure you want to delete this customer?");
             if (result.get() == ButtonType.OK) {
-                boolean hasAppointments = Query.associatedAppointmentsByCustomer(selectedCustomer.getCustomerId());
-                if (hasAppointments) {
-                    AlertUtils.alertError("Customer has appointments", "Please delete all appointments associated with this customer before deleting the customer");
-                    return;
-                }
+                Query.deleteAppointmentByCustomerId(selectedCustomer.getCustomerId());
                 Query.deleteCustomer(selectedCustomer.getCustomerId());
+                AlertUtils.alertInformation("Customer deleted", "The customer with id " + selectedCustomer.getCustomerId() + ", name " + selectedCustomer.getCustomerName() +", and all associated appointments has been deleted");
                 setCustomerTable();
+                setAppointmentTable();
             }
         } else {
             AlertUtils.alertError("No customer selected", "Please select a customer to delete");
@@ -220,6 +218,7 @@ public class HomeController implements Initializable {
             Optional<ButtonType> result = AlertUtils.alertConfirmation("Delete Appointment", "Are you sure you want to delete this appointment?");
             if (result.get() == ButtonType.OK) {
                 Query.deleteAppointment(selectedAppointment.getAppointmentId());
+                AlertUtils.alertInformation("Appointment deleted", "The appointment with id " + selectedAppointment.getAppointmentId() + " and type " + selectedAppointment.getAppointmentType() +" has been deleted");
                 setAppointmentTable();
             }
         } else {
@@ -263,7 +262,7 @@ public class HomeController implements Initializable {
      */
     public static void checkFor15MinAppt() {
         if(getUpcoming15minAppointments().size()>0) {
-            AlertUtils.alertInformation("Upcoming Appointment", "You have one more more appointment(s) in the next 15 minutes");
+            AlertUtils.alertInformation("Upcoming Appointment", "You have one or more appointment(s) in the next 15 minutes");
             getUpcoming15minAppointments().forEach(appointment -> {
                 AlertUtils.alertInformation("Upcoming Appointment", "Appointment ID " + appointment.getAppointmentId() + " at " + appointment.getAppointmentStartFormatted());
             });
